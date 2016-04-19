@@ -3,7 +3,7 @@ import json
 import re
 import os
 import time
-
+from datetime import datetime
 # https://www.reddit.com/dev/api#GET_random
 
 headers = {
@@ -63,17 +63,39 @@ quit()"""
 loopstart = time.time()
 for reddit in reddits:
     print "Reading from subreddit /r/%s" % (reddit)
-    r = requests.get(r'http://www.reddit.com/r/%s/hot.json?limit=100' % (reddit), headers = headers)
+    r = requests.get(r'http://www.reddit.com/r/%s/hot.json?limit=3' % (reddit), headers = headers)
     data = r.json()
 
     # A list of reddit Thing objects that are posts.
     postedThings = data["data"]["children"]
     counter = 1;
+    result = ""
     for thing in postedThings:
         if not thing["data"]["stickied"] == 1: 
-            print str(counter) + ": " + thing["data"]["title"]
+            #relevate attr: title, serious flag, time of post
+            #length of title(word count), length of post(word count)
+            #author account age, total author karma
+            title = thing["data"]["title"]            
+            serious = str('Serious' in title)
+            if serious: #leave the title purely the title itself 
+                title = title.replace("[Serious]","")
+            #doubt about the time, even if the time is tracked, the time is based on chicago time and reddit has users from everywhere
+            time = thing["data"]["created_utc"]
+            time = datetime.fromtimestamp(int(time)).strftime('%Y-%m-%d %H:%M:%S') 
+            # print str(counter) + ": " + thing["data"]["title"]
+            result += title + serious + ' ' + time + '\n'
             counter += 1
-            stripAndSave(thing["data"]["permalink"])
-loopend = time.time()
+            # stripAndSave(thing["data"]["permalink"])
+    print result
 
-print str(loopend - loopstart) + " seconds elapsed, total"
+
+
+
+
+
+
+
+
+
+
+
