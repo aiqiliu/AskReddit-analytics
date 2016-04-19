@@ -60,7 +60,7 @@ def stripAndSave(link):
 stripAndSave(r'/r/todayilearned/comments/1vexzs/til_when_ignored_by_that_person_whose_attention.json')
 quit()"""
 
-loopstart = time.time()
+# loopstart = time.time()
 for reddit in reddits:
     print "Reading from subreddit /r/%s" % (reddit)
     r = requests.get(r'http://www.reddit.com/r/%s/hot.json?limit=3' % (reddit), headers = headers)
@@ -73,7 +73,7 @@ for reddit in reddits:
     for thing in postedThings:
         if not thing["data"]["stickied"] == 1: 
             #relevate attr: title, serious flag, time of post
-            #length of title(word count), length of post(word count)
+            #length of title(word count)
             #author account age, total author karma
             title = thing["data"]["title"]            
             serious = str('Serious' in title) + ' '
@@ -81,12 +81,18 @@ for reddit in reddits:
                 title = title.replace("[Serious]","")
             titleLen = str(len(title.split())) + ' '
             #doubt about the time, even if the time is tracked, the time is based on chicago time and reddit has users from everywhere
-            time = thing["data"]["created_utc"]
-            time = datetime.fromtimestamp(int(time)).strftime('%Y-%m-%d %H:%M') + ' '
-            # print str(counter) + ": " + thing["data"]["title"]
-            #most of the posts have no bpdy 
+            utcTime = thing["data"]["created_utc"]
+            utcTime = datetime.fromtimestamp(int(utcTime)).strftime('%Y-%m-%d %H:%M') + ' '
             
-            result += title + serious + time + titleLen + '\n'
+            localTime = thing["data"]["created"]
+            localTime = datetime.fromtimestamp(int(localTime)).strftime('%Y-%m-%d %H:%M') + ' '
+
+            author = thing["data"]["author"]
+            authorQuery = requests.get(r'http://www.reddit.com/%s/about.json' % (author), headers = headers)
+            linkKarma = 
+            #length of children array for that person
+            #comments karma, link karma
+            result += title + titleLen + serious + utcTime + localTime + '\n'
             counter += 1
             # stripAndSave(thing["data"]["permalink"])
     print result
