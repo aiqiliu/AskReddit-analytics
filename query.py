@@ -76,14 +76,17 @@ for reddit in reddits:
             #length of title(word count), length of post(word count)
             #author account age, total author karma
             title = thing["data"]["title"]            
-            serious = str('Serious' in title)
+            serious = str('Serious' in title) + ' '
             if serious: #leave the title purely the title itself 
                 title = title.replace("[Serious]","")
+            titleLen = str(len(title.split())) + ' '
             #doubt about the time, even if the time is tracked, the time is based on chicago time and reddit has users from everywhere
             time = thing["data"]["created_utc"]
-            time = datetime.fromtimestamp(int(time)).strftime('%Y-%m-%d %H:%M:%S') 
+            time = datetime.fromtimestamp(int(time)).strftime('%Y-%m-%d %H:%M') + ' '
             # print str(counter) + ": " + thing["data"]["title"]
-            result += title + serious + ' ' + time + '\n'
+            #most of the posts have no bpdy 
+            
+            result += title + serious + time + titleLen + '\n'
             counter += 1
             # stripAndSave(thing["data"]["permalink"])
     print result
