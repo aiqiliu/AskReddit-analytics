@@ -44,6 +44,6 @@ CSV files are saved to the `/output` directory.
 
 ## TODO
 
-[ ] Make sure it works for "non-hot" data
-[ ] Implement duplicate detection and removal for posts...honestly, figure out what to do with duplicates to begin with lol
-[ ] Set up as a cron job on raspberry pi
+[ ] Make sure it works for "non-hot" data  
+[ ] Implement duplicate detection and removal for posts...honestly, figure out what to do with duplicates to begin with lol  
+[ ] Set up as a cron job on raspberry pi  
