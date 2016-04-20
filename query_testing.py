@@ -1,12 +1,11 @@
 import requests
-import json
+import re
 import datetime
-import print_data
+import io_tools
 
 def get_posts(subreddit, sort="hot", n=25):
   '''fetch the top 25 posts from the given subreddit
-
-     return a list of dictionaries containing info about each post
+     returns a list of dictionaries containing info about each post
   '''
 
   # Perform initial query and store response JSON in a dict
@@ -18,11 +17,10 @@ def get_posts(subreddit, sort="hot", n=25):
   processed = []
 
   for post in posts[1:]:
-    current = extract_post_info(post["data"])  # Need ["data"] to traverse API response
-
+    # Need ["data"] to traverse API response
+    current = extract_post_info(post["data"])
     # Set categorical according to filter mode of query
     current["hot"] = 1 if sort == "hot" else 0
-
     processed.append(current)
 
   return processed
@@ -33,18 +31,16 @@ def extract_post_info(post):
 
     returns another dictionary with processed attributes
 
-    POST INFO:
-    - String title
-    - Number title_length
-    - Bool serious
-    - Number utc_post_time
-    - Number time_to_first_comment http://reddit.com/r/AskReddit/comments/4fgtt7.json
-
-    AUTHOR INFO:
-    - Bool author_gold
-    - Number author_account_age /user/USERNAME/about.json[created-utc]
-    - Number author_link_karma
-    - Number author_comment_karma
+    - title (string)
+    - title_length (numerical)
+    - serious (binary)
+    - nsfw (binary)
+    - post_time (numerical)
+    - time_to_first_comment (numerical)
+    - author_gold (binary)
+    - author_account_age (numerical)
+    - author_link_karma (numerical)
+    - author_comment_karma (numerical)
   '''
 
   info = {}
@@ -59,7 +55,8 @@ def extract_post_info(post):
 
   # Remove "serious" or "nsfw" tags from title
   # lol what is regex
-  title = re.sub(r'(?: ?[\(\[]serious[\)\]] ?)|([\[|\( ]nsfw(?:$|\)|\]) ?)',
+  title_re = r'(?: ?[\(\[]serious[\)\]] ?)|([\[|\( ]nsfw(?:$|\)|\]) ?)'
+  title = re.sub(title_re,
                  "",
                  post["title"],
                  flags=re.IGNORECASE)
@@ -81,7 +78,8 @@ def extract_post_info(post):
 
   # Retrieve first comment
   # TODO: maybe raise the threshold to like 5 comments?
-  comments_res = requests.get(r'http://www.reddit.com/r/%s/comments/%s.json?sort=old&limit=1' % (str(post["subreddit"]), str(post["id"])), headers = headers)
+  comments_url = r'http://www.reddit.com/r/%s/comments/%s.json?sort=old&limit=1' % (post["subreddit"], post["id"])
+  comments_res = requests.get(comments_url, headers = headers)
   comments_data = comments_res.json()[1]["data"]["children"]
 
   if len(comments_data) is 0:
@@ -101,7 +99,8 @@ def extract_post_info(post):
   # - author_comment_karma
   ##################################
 
-  author_res = requests.get(r'http://www.reddit.com/user/%s/about.json' % (post["author"]), headers = headers)
+  author_url = r'http://www.reddit.com/user/%s/about.json' % (post["author"])
+  author_res = requests.get(author_url, headers = headers)
   author_data = author_res.json()["data"]
 
   info["author_gold"] = 1 if author_data["is_gold"] else 0
@@ -117,4 +116,5 @@ if __name__ == "__main__":
   subreddit = "AskReddit"
   data = get_posts(subreddit, n=3)
   print data
-  # print_data(data, ignore=["title"])
+  io_tools.csv_write(data)
+  io_tools.print_data(data, ignore=["title"])
