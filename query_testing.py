@@ -1,6 +1,7 @@
 import requests
 import json
 import datetime
+import print_data
 
 def get_posts(subreddit, sort="hot", n=25):
   '''fetch the top 25 posts from the given subreddit
@@ -114,4 +115,6 @@ def extract_post_info(post):
 if __name__ == "__main__":
   headers = { 'User-Agent': "EECS 349 scraper" }
   subreddit = "AskReddit"
-  print get_posts(subreddit, n=3)
+  data = get_posts(subreddit, n=3)
+  print data
+  # print_data(data, ignore=["title"])
