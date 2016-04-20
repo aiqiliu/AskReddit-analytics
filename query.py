@@ -1,120 +1,135 @@
+#!/usr/bin/env python
+
 import requests
-import json
 import re
-import os
-import time
-from datetime import datetime
+import datetime
+import io_tools
 
-headers = {
-            'User-Agent': "EECS 349 scraper"
-          }
+HEADERS = { "User-Agent": "EECS 349 scraper" }
 
-unneededFields = ["subreddit_id", "banned_by", "subreddit", "saved", "id", "parent_id", "approved_by", "edited", "author_flair_css_class", "body_html", "link_id", "score_hidden", "name", "created", "author_flair_text", "distinguished", "num_reports"]
+def get_posts(subreddit, sort="hot", n=25):
+  '''fetch the top 25 posts from the given subreddit
+     returns a list of dictionaries containing info about each post
+  '''
 
-reddits = ["askreddit"]
+  # Perform initial query and store response JSON in a dict
+  print "Querying /r/%s..." % (subreddit)
+  res = requests.get(r'http://www.reddit.com/r/%s/%s.json?limit=%d' % (subreddit, sort, n), headers = HEADERS)
+  data = dict(res.json())
+  posts = data["data"]["children"]  # Gets post array from API response object
 
-cwd = os.getcwd() #"current working directory"
+  processed = []
 
-def removeUnneededFieldsFromData(comment):
-    if comment["kind"] == "t1":
-        for f in unneededFields:
-            if f in comment["data"]:
-                del comment["data"][f]
-        if "replies" in comment["data"] and len(comment["data"]['replies']) > 0:
-            for c in comment["data"]['replies']["data"]["children"]:
-                removeUnneededFieldsFromData(c)
-    elif comment["kind"] == "more":
-        del comment["data"]
+  for post in posts[1:]:
+    print "Extracting info for post \"%s\"..." % (post["data"]["title"])
+    # Need ["data"] to traverse API response
+    current = extract_post_info(post["data"])
+    # Set categorical according to filter mode of query
+    current["hot"] = 1 if sort == "hot" else 0
+    processed.append(current)
 
-
-def stripAndSave(link):
-    starttime = time.time()
-    url = r'http://www.reddit.com%s.json' % (link[:-1])
-    raw = requests.get(url, headers=headers)
-    data = raw.json()
-    subreddit = data[0]["data"]["children"][0]["data"]["subreddit"]
-    title = data[0]["data"]["children"][0]["data"]["permalink"]
-    # Extract the unique part of the Reddit URL, ie the parts after 'comment/'
-    m = re.search('comments/([\w\d]+/[\w+]+)', title) 
-    title = m.group(1)
-    title = re.sub('/', ':', title)
-    filename = "r/" + subreddit + "/" + title + ".json"
-    for child in data[1]["data"]["children"]:
-       removeUnneededFieldsFromData(child) # strip the irrelevant cruft from the json files, halving their storage space
-    if not os.path.isdir(cwd + "/" + subreddit):
-        try:
-            os.makedirs("r/" + subreddit + "/")
-        except OSError, e:
-            if e.errno != 17: # This error is simply signalling that the directories exist already. Therefore, ignore it
-                raise #if it's a different error, "raise" another error
-    f = open(filename, "w")
-    f.write(json.dumps(data))
-    f.close()
-    endtime = time.time()
-    if endtime - starttime < 2:
-        time.sleep(2 - (endtime - starttime))
+  return processed
 
 
-if __name__ == "__main__"
-    # loopstart = time.time()
-    for reddit in reddits:
-        print "Reading from subreddit /r/%s" % (reddit)
-        r = requests.get(r'http://www.reddit.com/r/%s/hot.json?limit=3' % (reddit), headers = headers)
-        data = r.json()
+def extract_post_info(post):
+  '''extracts relevant attributes from a post, represented as a dictionary
 
-        # A list of reddit Thing objects that are posts.
-        postedThings = data["data"]["children"]
-        counter = 1;
-        result = ""
-        for thing in postedThings:
-            if not thing["data"]["stickied"] == 1: 
-                #relevate attr: title, serious flag, time of post
-                #length of title(word count)
-                #author account age, total author karma
-                title = thing["data"]["title"]            
-                serious = str('Serious' in title) + ' '
-                if serious: #leave the title purely the title itself 
-                    title = title.replace("[Serious]","")
-                titleLen = str(len(title.split())) + ' '
-                #doubt about the time, even if the time is tracked, the time is based on chicago time and reddit has users from everywhere
-                utcTime = thing["data"]["created_utc"]
-                utcTime = datetime.fromtimestamp(int(utcTime)).strftime('%Y-%m-%d %H:%M') + ' '
-                
-                localTime = thing["data"]["created"]
-                localTime = datetime.fromtimestamp(int(localTime)).strftime('%Y-%m-%d %H:%M') + ' '
+    returns another dictionary with processed attributes
 
-                author = thing["data"]["author"]
-                authorQuery = requests.get(r'http://www.reddit.com/%s/about.json' % (author), headers = headers)
-                linkKarma = 
-                #length of children array for that person
-                #comments karma, link karma
-                result += title + titleLen + serious + utcTime + localTime + '\n'
-                counter += 1
-                # stripAndSave(thing["data"]["permalink"])
-        print result
+    - title (string)
+    - title_length (numerical)
+    - serious (binary)
+    - nsfw (binary)
+    - post_time (numerical)
+    - time_to_first_comment (numerical)
+    - author_gold (binary)
+    - author_account_age (numerical)
+    - author_link_karma (numerical)
+    - author_comment_karma (numerical)
+  '''
+
+  info = {}
+
+  ##################################
+  # TITLE/FLAIR INFO
+  # - title
+  # - title_length
+  # - serious
+  # - nsfw
+  ##################################
+
+  # Remove "serious" or "nsfw" tags from title
+  # lol what is regex
+  title_re = r'(?: ?[\(\[]serious[\)\]] ?)|([\[|\( ]nsfw(?:$|\)|\]) ?)'
+  title = re.sub(title_re,
+                 "",
+                 post["title"],
+                 flags=re.IGNORECASE)
+
+  info["title"] = str(title)
+  info["title_length"] = len(title)
+
+  info["serious"] = 1 if post["link_flair_text"] == "serious replies only" else 0
+  info["nsfw"] = 1 if post["over_18"] else 0
+
+  ##################################
+  # DATE/TIME INFO
+  # - post_time
+  # - time_to_first_comment
+  ##################################
+  # print str(datetime.datetime.fromtimestamp(post["created"]))
+
+  info["post_time"] = datetime.datetime.fromtimestamp(post["created_utc"])
+
+  # Retrieve first comment
+  # TODO: maybe raise the threshold to like 5 comments?
+  comments_url = r'http://www.reddit.com/r/%s/comments/%s.json?sort=old&limit=1' % (post["subreddit"], post["id"])
+  comments_res = requests.get(comments_url, headers = HEADERS)
+  comments_data = comments_res.json()[1]["data"]["children"]
+
+  if len(comments_data) is 0:
+    # If the post has no comments, set value to 0
+    info["time_to_first_comment"] = 0
+  else:
+    if "created_utc" in comments_data[0]["data"].keys():
+      comment_time = comments_data[0]["data"]["created_utc"]
+    else:
+      # Catch a weird case when the oldest comment doesn't have the "created_utc" field
+      oldest_comment_id = comments_data[0]["data"]["id"]
+      oldest_comment_res = requests.get(r'http://www.reddit.com/r/%s/comments/%s.json?comment=%s' % (post["subreddit"], post["id"], oldest_comment_id), headers = HEADERS)
+      comment_time = oldest_comment_res.json()[1]["data"]["children"][0]["data"]["created_utc"]
+
+    # Compute timedelt from post creation to comment creation
+    comment_datetime = datetime.datetime.fromtimestamp(comment_time)
+    info["time_to_first_comment"] = comment_datetime - info["post_time"]
+
+  ##################################
+  # AUTHOR INFO
+  # - author_gold
+  # - author_account_age
+  # - author_link_karma
+  # - author_comment_karma
+  ##################################
+
+  author_url = r'http://www.reddit.com/user/%s/about.json' % (post["author"])
+  author_res = requests.get(author_url, headers = HEADERS)
+  author_data = author_res.json()["data"]
+
+  info["author_gold"] = 1 if author_data["is_gold"] else 0
+  info["author_link_karma"] = author_data["link_karma"]
+  info["author_comment_karma"] = author_data["comment_karma"]
+  info["author_account_age"] = info["post_time"] - datetime.datetime.fromtimestamp(author_data["created_utc"])
+
+  return info
 
 
+if __name__ == "__main__":
+  sub = "AskReddit"
+  sort_by = "hot"
+  number_of_posts = 25
 
+  data = get_posts(sub, sort=sort_by, n=number_of_posts)
+  io_tools.csv_write(data)
 
-
-
-
-
-
-# TODO: format output with CSV
-# get author account age, comment_karma, link_karma
-# isGold
-# account age: /user/USERNAME/about.json[created-utc]
-# ^ need to generate current UTC timestamp
-# Time to first comment http://reddit.com/r/AskReddit/comments/4fgtt7.json
-
-- Length of title (numerical)
-- Serious flag (boolean)
-- Time of post (local)
-- Time of post (standard)
-- Author account age (date) *
-- Author link karma *
-- Author comment karma *
-- Time to first comment *
-
-
+  # Print out the data minus question titles
+  io_tools.print_data(data, ignore=["title"])
