@@ -18,7 +18,7 @@ def print_data(lst, ignore=[]):
     print ''.join([str(val).ljust(max_length) for key, val in entry.iteritems() if key not in ignore])
 
 
-def csv_write(data):
+def csv_write(data, output_dirname="output"):
   '''output a list of dictionaries as a csv file'''
 
   # e.g. "AskReddit__20-Apr-16__00-04-AM"
@@ -26,7 +26,14 @@ def csv_write(data):
   filename_ts = now.strftime("%d-%b-%y__%H-%M-%p")
   filename = "AskReddit__" + filename_ts  # TODO: magic strings are bad
 
-  with open(filename + ".csv", 'wb') as csvfile:
+  # Filesystem shenanigans
+  output_path = os.path.join(os.path.dirname(__file__), output_dirname)
+  
+  if not os.path.exists(output_path):
+    # Create output directory if none exists
+    os.makedirs(output_path)
+
+  with open(output_path + "/" + filename + ".csv", "wb") as csvfile:
       fieldnames = data[0].keys()
       writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
