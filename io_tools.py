@@ -32,6 +32,9 @@ def csv_write(data, output_dirname="output"):
   if not os.path.exists(output_path):
     # Create output directory if none exists
     os.makedirs(output_path)
+    print "Created output directory " + str(output_path)
+
+  print "Writing CSV dump..."
 
   with open(output_path + "/" + filename + ".csv", "wb") as csvfile:
       fieldnames = data[0].keys()
@@ -40,4 +43,8 @@ def csv_write(data, output_dirname="output"):
       writer.writeheader()
 
       for post in data:
-        writer.writerow(post)
+        # Temporarily convert to utf-8 for csv writing
+        d = dict((k, v.encode('utf-8')) for k, v in post.iteritems() if type(v) is str)
+        writer.writerow(d)
+
+  print "CSV written to file " + filename
