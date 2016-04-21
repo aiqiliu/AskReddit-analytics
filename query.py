@@ -67,7 +67,8 @@ def extract_post_info(post):
                  flags=re.IGNORECASE)
 
   info["title"] = str(title)
-  info["title_length"] = len(title)
+  #length by word count 
+  info["title_length"] = len(title.split(" "))
 
   info["serious"] = 1 if post["link_flair_text"] == "serious replies only" else 0
   info["nsfw"] = 1 if post["over_18"] else 0
@@ -79,8 +80,8 @@ def extract_post_info(post):
   ##################################
   # print str(datetime.datetime.fromtimestamp(post["created"]))
 
-  info["post_time"] = datetime.datetime.fromtimestamp(post["created_utc"])
-
+  info["post_utcTime"] = datetime.datetime.fromtimestamp(post["created_utc"])
+  info["post_localTime"] = datetime.datetime.fromtimestamp(post["created"])
   # Retrieve first comment
   # TODO: maybe raise the threshold to like 5 comments?
   comments_url = r'http://www.reddit.com/r/%s/comments/%s.json?sort=old&limit=1' % (post["subreddit"], post["id"])
@@ -101,7 +102,7 @@ def extract_post_info(post):
 
     # Compute timedelt from post creation to comment creation
     comment_datetime = datetime.datetime.fromtimestamp(comment_time)
-    info["time_to_first_comment"] = comment_datetime - info["post_time"]
+    info["time_to_first_comment"] = comment_datetime - info["post_utcTime"]
 
   ##################################
   # AUTHOR INFO
@@ -118,7 +119,7 @@ def extract_post_info(post):
   info["author_gold"] = 1 if author_data["is_gold"] else 0
   info["author_link_karma"] = author_data["link_karma"]
   info["author_comment_karma"] = author_data["comment_karma"]
-  info["author_account_age"] = info["post_time"] - datetime.datetime.fromtimestamp(author_data["created_utc"])
+  info["author_account_age"] = info["post_utcTime"] - datetime.datetime.fromtimestamp(author_data["created_utc"])
 
   return info
 
