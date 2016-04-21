@@ -19,20 +19,24 @@ def get_posts(subreddit, sort, n=25):
     print "Extracting from hot posts\n"
     data = dict(res.json())
     posts = data["data"]["children"]  # Gets post array from API response object
-    for post in posts[1:]:
-    # Need ["data"] to traverse API response
-        current = extract_post_info(post["data"])
-    # print "Extracting info for post \"%s\"..." % (current["title"])
   elif sort == "random":
     print "Extracting from random posts\n"
     data = res.json()
     posts = data
-    post = posts[0]["data"]["children"][0]["data"]
-    current = extract_post_info(post)
 
-  current["hot"] = 1 if sort == "hot" else 0
   processed = []
 
+  post = posts[0]["data"]["children"][0]["data"]
+  current = extract_post_info(post)
+
+  # for post in posts[1:]:
+  #   # Need ["data"] to traverse API response
+  #   if sort == "hot":
+  #       current = extract_post_info(post["data"])
+  #   elif sort == "random":
+  #       current = extract_post_info(post["data"]["children"][0]["data"])
+  #   # print "Extracting info for post \"%s\"..." % (current["title"])
+  #   current["hot"] = 1 if sort == "hot" else 0
   processed.append(current)
 
   return processed
@@ -68,6 +72,7 @@ def extract_post_info(post):
 
   # Remove "serious" or "nsfw" tags from title
   # lol what is regex
+  print "in the new func"
   title_re = r'(?: ?[\(\[]serious[\)\]] ?)|([\[|\( ]nsfw(?:$|\)|\]) ?)'
   title = re.sub(title_re,
                  "",
@@ -92,7 +97,7 @@ def extract_post_info(post):
   info["post_localTime"] = datetime.datetime.fromtimestamp(post["created"])
   # Retrieve first comment
   # TODO: maybe raise the threshold to like 5 comments?
-  comments_url = r'http://www.reddit.com/r/%s/comments/%s.json?sort=old' % (post["subreddit"], post["id"])
+  comments_url = r'http://www.reddit.com/r/%s/comments/%s.json?sort=old&limit=1' % (post["subreddit"], post["id"])
   comments_res = requests.get(comments_url, headers = HEADERS)
   comments_data = comments_res.json()[1]["data"]["children"]
 
@@ -100,34 +105,26 @@ def extract_post_info(post):
     # If the post has no comments, set value to 0
     # get number of total comments 
     info["time_to_first_comment"] = 0
-    info["10min_comment"] = 0
-  else:  
+  elif len(comments_data) > 5:
     if "created_utc" in comments_data[0]["data"].keys():
       first_comment_time = comments_data[0]["data"]["created_utc"]
+      fifth_comment_time = comments_data[4]["data"]["created_utc"]
     else:
       # Catch a weird case when the oldest comment doesn't have the "created_utc" field
       oldest_comment_id = comments_data[0]["data"]["id"]
       oldest_comment_res = requests.get(r'http://www.reddit.com/r/%s/comments/%s.json?comment=%s' % (post["subreddit"], post["id"], oldest_comment_id), headers = HEADERS)
       first_comment_time = oldest_comment_res.json()[1]["data"]["children"][0]["data"]["created_utc"]
-    
+
+      fifth_comment_id = comments_data[4]["data"]["id"]
+      fifth_comment_res = requests.get(r'http://www.reddit.com/r/%s/comments/%s.json?comment=%s' % (post["subreddit"], post["id"], fifth_comment_id), headers = HEADERS)
+      fifth_comment_time = oldest_comment_res.json()[1]["data"]["children"][0]["data"]["created_utc"]
+    #first 5 comments time 
+    # Compute timedelt from post creation to comment creation
     first_comment_datetime = datetime.datetime.fromtimestamp(first_comment_time)
     info["time_to_first_comment"] = first_comment_datetime - info["post_utcTime"]
-    
 
-    for i in range(0, len(comments_data)):
-      if i == 0: #correspond of previous case when oldest comment doesn't have "created_utc"
-        timeDiff = first_comment_time - post["created_utc"]
-      else:
-        timeDiff = comments_data[i]["data"]["created_utc"] - post["created_utc"]
-      # unix time refers to seconds. 10min = 600s
-      if timeDiff > 600:
-        #break at the first comment later than 10mins of the post posted time 
-        info["10min_comment"] = i
-        break
-
-    # All comments are within 10mins of post time
-    if i == len(comments_data) - 1:
-      info["10min_comment"] = i
+    fifth_comment_datetime = datetime.datetime.fromtimestamp(fifth_comment_time)
+    info["time_to_fifth_comment"] = fifth_comment_datetime - info["post_utcTime"]
 
   ##################################
   # AUTHOR INFO
@@ -146,6 +143,7 @@ def extract_post_info(post):
   info["author_comment_karma"] = author_data["comment_karma"]
   info["author_account_age"] = info["post_utcTime"] - datetime.datetime.fromtimestamp(author_data["created_utc"])
 
+  print info
   return info
 
 def runScript(sort):
