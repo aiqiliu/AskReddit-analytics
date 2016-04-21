@@ -35,7 +35,8 @@ CSV files are saved to the `/output` directory.
 * title_length (numerical)
 * serious (binary)
 * nsfw (binary)
-* post_time (numerical)
+* post_utcTime (numerical)
+* post_localTime (numerical)
 * time_to_first_comment (numerical)
 * author_gold (binary)
 * author_account_age (numerical)
@@ -47,3 +48,5 @@ CSV files are saved to the `/output` directory.
 * [ ] Make sure it works for "non-hot" data  
 * [ ] Implement duplicate detection and removal for posts...honestly, figure out what to do with duplicates to begin with lol  
 * [ ] Set up as a cron job on raspberry pi  
+* [ ] Run keyword occurences
+* [ ] Figure out strategies for sentiment and topic category analysis
