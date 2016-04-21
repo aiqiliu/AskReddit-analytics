@@ -44,7 +44,8 @@ def csv_write(data, output_dirname="output"):
 
       for post in data:
         # Temporarily convert to utf-8 for csv writing
-        d = dict((k, v.encode('utf-8')) for k, v in post.iteritems() if type(v) is str)
-        writer.writerow(d)
+        # d = dict((k, v.encode('utf-8')) for k, v in post.iteritems() if type(v) is str)
+
+        writer.writerow(post)
 
   print "CSV written to file " + filename

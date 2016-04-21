@@ -66,11 +66,11 @@ def extract_post_info(post):
                  post["title"],
                  flags=re.IGNORECASE)
 
-  info["title"] = title
+  info["title"] = str(title)
   info["title_length"] = len(title)
 
-  info["serious"] = int(post["link_flair_text"] == "serious replies only")
-  info["nsfw"] = int(post["over_18"])
+  info["serious"] = 1 if post["link_flair_text"] == "serious replies only" else 0
+  info["nsfw"] = 1 if post["over_18"] else 0
 
   ##################################
   # DATE/TIME INFO
@@ -113,21 +113,12 @@ def extract_post_info(post):
 
   author_url = r'http://www.reddit.com/user/%s/about.json' % (post["author"])
   author_res = requests.get(author_url, headers = HEADERS)
+  author_data = author_res.json()["data"]
 
-  if "data" in author_res.json().keys():
-    author_data = author_res.json()["data"]
-
-    info["author_gold"] = int(author_data["is_gold"])
-    info["author_link_karma"] = author_data["link_karma"]
-    info["author_comment_karma"] = author_data["comment_karma"]
-    info["author_account_age"] = info["post_time"] - datetime.datetime.fromtimestamp(author_data["created_utc"])
-  else:
-    # Catch the case where the user deleted their account
-    print "\tWARNING: No author information available"
-    author_attrs = ["author_gold", "author_link_karma", "author_comment_karma", "author_account_age"]
-    for a in author_attrs:
-        info[a] = None
-
+  info["author_gold"] = 1 if author_data["is_gold"] else 0
+  info["author_link_karma"] = author_data["link_karma"]
+  info["author_comment_karma"] = author_data["comment_karma"]
+  info["author_account_age"] = info["post_time"] - datetime.datetime.fromtimestamp(author_data["created_utc"])
 
   return info
 
