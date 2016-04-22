@@ -7,7 +7,7 @@ import io_tools
 
 HEADERS = { "User-Agent": "EECS 349 scraper" }
 
-def get_posts(subreddit, sort, n=25):
+def get_posts(subreddit, sort, n):
   '''fetch the top 25 posts from the given subreddit
      returns a list of dictionaries containing info about each post
   '''
@@ -15,25 +15,26 @@ def get_posts(subreddit, sort, n=25):
   # Perform initial query and store response JSON in a dict
   print "Querying /r/%s..." % (subreddit)
   res = requests.get(r'http://www.reddit.com/r/%s/%s.json?limit=%d' % (subreddit, sort, n), headers = HEADERS)
+  processed = []
+
   if sort == "hot":
     print "Extracting from hot posts\n"
     data = dict(res.json())
     posts = data["data"]["children"]  # Gets post array from API response object
     for post in posts[1:]:
     # Need ["data"] to traverse API response
-        current = extract_post_info(post["data"])
-    # print "Extracting info for post \"%s\"..." % (current["title"])
+      current = extract_post_info(post["data"])
+      current["hot"] = 1 if sort == "hot" else 0
+      processed.append(current)
+      print "Extracting info for post \"%s\"..." % (current["title"])
   elif sort == "random":
     print "Extracting from random posts\n"
     data = res.json()
     posts = data
     post = posts[0]["data"]["children"][0]["data"]
     current = extract_post_info(post)
-
-  current["hot"] = 1 if sort == "hot" else 0
-  processed = []
-
-  processed.append(current)
+    current["hot"] = 1 if sort == "hot" else 0
+    processed.append(current)
 
   return processed
 
@@ -154,14 +155,15 @@ def runScript(sort):
   number_of_posts = 25
 
   data = get_posts(sub, sort=sort_by, n=number_of_posts)
-  # io_tools.csv_write(data)
+  io_tools.csv_write(data, sort_by)
 
-  # # Print out the data minus question titles
-  # io_tools.print_data(data, ignore=["title"])
+  # Print out the data minus question titles
+  io_tools.print_data(data, ignore=["title"])
 
 if __name__ == "__main__":
-    # runScript("hot")
+    runScript("hot")
     #need to run 30 times
+
     runScript("random")
 
 
