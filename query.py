@@ -3,4 +3,4 @@ import hotQuery
 import randomQuery
 
 execfile("hotQuery.py")
-# execfile("randomQuery.py")
+execfile("randomQuery.py")
