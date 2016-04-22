@@ -23,7 +23,7 @@ def csv_write(data, type):
 
   # e.g. "AskReddit__20-Apr-16__00-04-AM"
   now = datetime.datetime.now()
-  filename_ts = now.strftime("%b.%d_%H:%M-%p")
+  filename_ts = now.strftime("%b.%d_%H:%M%p")
   if type == "hot":
     filename = "hot_" + filename_ts  # TODO: magic strings are bad
     output_dirname = "hot"
