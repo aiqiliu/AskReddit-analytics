@@ -23,11 +23,11 @@ def csv_write(data, type):
 
   # e.g. "AskReddit__20-Apr-16__00-04-AM"
   now = datetime.datetime.now()
-  filename_ts = now.strftime("%d-%b__%H-%M-%p")
+  filename_ts = now.strftime("%b.%d_%H:%M-%p")
   if type == "hot":
     filename = "hot_" + filename_ts  # TODO: magic strings are bad
     output_dirname = "hot"
-  else:
+  elif type == "random":
     filename = "random_" + filename_ts 
     output_dirname = "random"
   # Filesystem shenanigans
@@ -49,7 +49,6 @@ def csv_write(data, type):
       for post in data:
         # Temporarily convert to utf-8 for csv writing
         # d = dict((k, v.encode('utf-8')) for k, v in post.iteritems() if type(v) is str)
-
         writer.writerow(post)
 
   print "CSV written to file " + filename

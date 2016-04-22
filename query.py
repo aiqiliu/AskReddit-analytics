@@ -14,27 +14,28 @@ def get_posts(subreddit, sort, n):
 
   # Perform initial query and store response JSON in a dict
   print "Querying /r/%s..." % (subreddit)
-  res = requests.get(r'http://www.reddit.com/r/%s/%s.json?limit=%d' % (subreddit, sort, n), headers = HEADERS)
   processed = []
 
   if sort == "hot":
-    print "Extracting from hot posts\n"
-    data = dict(res.json())
+    res = requests.get(r'http://www.reddit.com/r/%s/%s.json?limit=%d' % (subreddit, sort, n), headers = HEADERS)
+    data = res.json()
     posts = data["data"]["children"]  # Gets post array from API response object
     for post in posts[1:]:
-    # Need ["data"] to traverse API response
+      # Need ["data"] to traverse API response
       current = extract_post_info(post["data"])
       current["hot"] = 1 if sort == "hot" else 0
       processed.append(current)
       print "Extracting info for post \"%s\"..." % (current["title"])
   elif sort == "random":
-    print "Extracting from random posts\n"
-    data = res.json()
-    posts = data
-    post = posts[0]["data"]["children"][0]["data"]
-    current = extract_post_info(post)
-    current["hot"] = 1 if sort == "hot" else 0
-    processed.append(current)
+    for i in range(0, 30):
+      res = requests.get(r'http://www.reddit.com/r/%s/%s.json?limit=%d' % (subreddit, sort, n), headers = HEADERS)
+      data = res.json()
+      posts = data
+      post = posts[0]["data"]["children"][0]["data"]
+      current = extract_post_info(post)
+      current["hot"] = 1 if sort == "hot" else 0
+      processed.append(current)
+    print "Extracting info for post \"%s\"..." % (current["title"])
 
   return processed
 
@@ -155,6 +156,7 @@ def runScript(sort):
   number_of_posts = 25
 
   data = get_posts(sub, sort=sort_by, n=number_of_posts)
+      
   io_tools.csv_write(data, sort_by)
 
   # Print out the data minus question titles
@@ -163,7 +165,6 @@ def runScript(sort):
 if __name__ == "__main__":
     runScript("hot")
     #need to run 30 times
-
     runScript("random")
 
 
