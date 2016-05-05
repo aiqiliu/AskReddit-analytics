@@ -25,7 +25,7 @@ By default, `query.py` executes the following parameters:
 * **Sort view:** `"hot"`
 * **Number of posts:** `25`
 
-CSV files are saved to the `/output` directory.
+CSV files are saved to the `/hot` and  `/random` directory.
 
 ### Attributes
 
