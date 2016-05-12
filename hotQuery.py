@@ -151,7 +151,41 @@ def extract_post_info(post):
   info["author_comment_karma"] = author_data["comment_karma"]
   info["author_account_age"] = info["post_utcTime"] - datetime.datetime.fromtimestamp(author_data["created_utc"])
 
+  #Parse words into question
+  info["question_type"] = question_type_classifier(str(title))
+
   return info
+
+def question_type_classifier(title):
+  ##################################
+  # QUESTION TYPE
+  # 1 -> Who
+  # 2 -> Where
+  # 3 -> When
+  # 4 -> Why
+  # 5 -> What
+  # 6 -> Which
+  # 7 -> How
+  # 0 -> Could not find
+  ##################################
+  question_types = [
+    '', #Blank for could not find
+    'who',
+    'where',
+    'when',
+    'why',
+    'what',
+    'which',
+    'how'
+  ]
+  # Convert words in title to lowercase and then split by spaces
+  title_array = title.lower().split()
+
+  for word in title_array:
+    for i in range(1, len(question_types)):
+      if word.find(question_types[i]) >= 0:
+        return i
+  return 0
 
   
 if __name__ == "__main__":
