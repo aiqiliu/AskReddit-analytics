@@ -31,16 +31,18 @@ def get_posts(subreddit, sort, n):
 
 def filter_batch(ts, posts):
   """filters a list of posts according to a given timestamp"""
+
   filtered = []
-  goal_time = datetime.datetime.fromtimestamp(ts)
+  hot_query_time = datetime.datetime.fromtimestamp(ts)
+
   for p in posts:
     post_time = p["post_utcTime"]
-    tdiff = post_time - goal_time
+    tdiff = hot_query_time - post_time  # TODO: need to swap depending on direction of range
     if tdiff.days <= 1:
       filtered.append(p)
 
   return filtered
-  
+
 
 def extract_post_info(post):
   '''extracts relevant attributes from a post, represented as a dictionary
