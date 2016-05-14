@@ -7,56 +7,28 @@ import io_tools
 HEADERS = { "User-Agent": "EECS 349 scraper" }
 
 def get_posts(subreddit, sort, n):
-  '''fetch the top 25 posts from the given subreddit
-     returns a list of dictionaries containing info about each post
-  '''
-
   # Perform initial query and store response JSON in a dict
-  print "Querying /r/%s..." % (subreddit)
+  print "Querying /r/%s/%s..." % (subreddit, sort)
   processed = []
 
-  res = requests.get(r'http://www.reddit.com/r/%s/%s.json?limit=%d' % (subreddit, sort, n), headers = HEADERS)
-  data = res.json()
-  posts = data["data"]["children"]  # Gets post array from API response object
-<<<<<<< HEAD
-
-=======
-  
->>>>>>> title-parsing
-  for post in posts[1:]:
-    # Need ["data"] to traverse API response
-    current = extract_post_info(post["data"])
+  for i in range (0, n):
+    res = requests.get(r'http://www.reddit.com/r/%s/%s.json' % (subreddit, sort), headers = HEADERS)
+    data = res.json()
+    posts = data
+    post = posts[0]["data"]["children"][0]["data"]
+    current = extract_post_info(post)
     current["hot"] = 1 if sort == "hot" else 0
     processed.append(current)
-    print "Extracting info for post \"%s\"..." % (current["title"])
+  print "Extracting info for post \"%s\"..." % (current["title"])
 
   return processed
 
 
-<<<<<<< HEAD
-def extract_post_info(post):
-  '''extracts relevant attributes from a post, represented as a dictionary
-    returns another dictionary with processed attributes
-=======
-def filter_batch(ts, posts):
-  """filters a list of posts according to a given timestamp"""
-  filtered = []
-  goal_time = datetime.datetime.fromtimestamp(ts)
-  for p in posts:
-    post_time = p["post_utcTime"]
-    tdiff = post_time - goal_time
-    if tdiff.days <= 1:
-      filtered.append(p)
-
-  return filtered
-  
-
 def extract_post_info(post):
   '''extracts relevant attributes from a post, represented as a dictionary
 
     returns another dictionary with processed attributes
 
->>>>>>> title-parsing
     - title (string)
     - title_length (numerical)
     - serious (binary)
@@ -89,11 +61,7 @@ def extract_post_info(post):
                  flags=re.IGNORECASE)
 
   info["title"] = str(title)
-<<<<<<< HEAD
-  #length by word count
-=======
   #length by word count 
->>>>>>> title-parsing
   info["title_length"] = len(title.split(" "))
 
   info["serious"] = 1 if post["link_flair_text"] == "serious replies only" else 0
@@ -103,31 +71,22 @@ def extract_post_info(post):
   # DATE/TIME INFO
   # - post_time
   # - time_to_first_comment
-  # - 10min_comment: num of comments in the first 10 mins
   ##################################
   # print str(datetime.datetime.fromtimestamp(post["created"]))
 
   info["post_utcTime"] = datetime.datetime.fromtimestamp(post["created_utc"])
   info["post_localTime"] = datetime.datetime.fromtimestamp(post["created"])
-  # Retrieve first comment
-  # TODO: maybe raise the threshold to like 5 comments?
+  # Retrieve comments: time to first comment and comment activity in first 10mins
   comments_url = r'http://www.reddit.com/r/%s/comments/%s.json?sort=old' % (post["subreddit"], post["id"])
   comments_res = requests.get(comments_url, headers = HEADERS)
   comments_data = comments_res.json()[1]["data"]["children"]
 
   if len(comments_data) is 0:
     # If the post has no comments, set value to 0
-<<<<<<< HEAD
-    # get number of total comments
-    info["time_to_first_comment"] = 0
-    info["10min_comment"] = 0
-  else:
-=======
     # get number of total comments 
     info["time_to_first_comment"] = 0
     info["10min_comment"] = 0
   else:  
->>>>>>> title-parsing
     if "created_utc" in comments_data[0]["data"].keys():
       first_comment_time = comments_data[0]["data"]["created_utc"]
     else:
@@ -135,17 +94,10 @@ def extract_post_info(post):
       oldest_comment_id = comments_data[0]["data"]["id"]
       oldest_comment_res = requests.get(r'http://www.reddit.com/r/%s/comments/%s.json?comment=%s' % (post["subreddit"], post["id"], oldest_comment_id), headers = HEADERS)
       first_comment_time = oldest_comment_res.json()[1]["data"]["children"][0]["data"]["created_utc"]
-<<<<<<< HEAD
-
-    first_comment_datetime = datetime.datetime.fromtimestamp(first_comment_time)
-    info["time_to_first_comment"] = first_comment_datetime - info["post_utcTime"]
-
-=======
     
     first_comment_datetime = datetime.datetime.fromtimestamp(first_comment_time)
     info["time_to_first_comment"] = first_comment_datetime - info["post_utcTime"]
     
->>>>>>> title-parsing
 
     for i in range(0, len(comments_data)):
       if i == 0: #correspond of previous case when oldest comment doesn't have "created_utc"
@@ -154,11 +106,7 @@ def extract_post_info(post):
         timeDiff = comments_data[i]["data"]["created_utc"] - post["created_utc"]
       # unix time refers to seconds. 10min = 600s
       if timeDiff > 600:
-<<<<<<< HEAD
-        #break at the first comment later than 10mins of the post posted time
-=======
         #break at the first comment later than 10mins of the post posted time 
->>>>>>> title-parsing
         info["10min_comment"] = i
         break
 
@@ -183,11 +131,6 @@ def extract_post_info(post):
   info["author_comment_karma"] = author_data["comment_karma"]
   info["author_account_age"] = info["post_utcTime"] - datetime.datetime.fromtimestamp(author_data["created_utc"])
 
-<<<<<<< HEAD
-  return info
-
-
-=======
   #Parse words into question
   info["question_type"] = question_type_classifier(str(title))
 
@@ -224,29 +167,20 @@ def question_type_classifier(title):
         return i
   return 0
 
-  
->>>>>>> title-parsing
+
 if __name__ == "__main__":
   sub = "AskReddit"
-  sort_by = "hot"
-  number_of_posts = 25
+  sort_by = "random"
+  number_of_posts = 40
 
   data = get_posts(sub, sort=sort_by, n=number_of_posts)
-<<<<<<< HEAD
-
-=======
       
->>>>>>> title-parsing
   io_tools.csv_write(data, sort_by)
 
   # Print out the data minus question titles
   io_tools.print_data(data, ignore=["title"])
-<<<<<<< HEAD
-=======
-
 
 
 
 
   
->>>>>>> title-parsing
