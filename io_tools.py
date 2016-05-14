@@ -18,18 +18,14 @@ def print_data(lst, ignore=[]):
     print ''.join([str(val).ljust(max_length) for key, val in entry.iteritems() if key not in ignore])
 
 
-def csv_write(data, type):
+def csv_write(data, output_dirname="output"):
   '''output a list of dictionaries as a csv file'''
 
   # e.g. "AskReddit__20-Apr-16__00-04-AM"
   now = datetime.datetime.now()
-  filename_ts = now.strftime("%b.%d_%H.%M%p")
-  if type == "hot":
-    filename = "hot_" + filename_ts  # TODO: magic strings are bad
-    output_dirname = "hot"
-  elif type == "random":
-    filename = "random_" + filename_ts 
-    output_dirname = "random"
+  filename_ts = now.strftime("%d-%b-%y__%H-%M-%p")
+  filename = "AskReddit__" + filename_ts  # TODO: magic strings are bad
+
   # Filesystem shenanigans
   output_path = os.path.join(os.path.dirname(__file__), output_dirname)
   
@@ -49,6 +45,7 @@ def csv_write(data, type):
       for post in data:
         # Temporarily convert to utf-8 for csv writing
         # d = dict((k, v.encode('utf-8')) for k, v in post.iteritems() if type(v) is str)
+
         writer.writerow(post)
 
   print "CSV written to file " + filename
