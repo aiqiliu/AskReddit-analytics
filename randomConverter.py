@@ -1,6 +1,6 @@
 import json
 import glob
-from query import extract_post_info
+from hotQuery import extract_post_info
 from io_tools import csv_write
 
 processed = []
@@ -16,7 +16,6 @@ def loadFile(fileName):
 
 def run():
     jsonFileNames = glob.glob(folderName +"/*.json")
-    print jsonFileNames
     for fileName in jsonFileNames:
         print fileName
         post = loadFile(fileName)
