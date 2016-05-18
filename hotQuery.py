@@ -3,6 +3,9 @@ import requests
 import re
 import datetime
 import io_tools
+from pywsd import disambiguate
+# from nltk.corpus import wordnet as wn
+
 
 HEADERS = { "User-Agent": "EECS 349 scraper" }
 
