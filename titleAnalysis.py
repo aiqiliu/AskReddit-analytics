@@ -14,6 +14,7 @@
 # save the cache of the training info so that the classification can just load the dicts
 
 import nltk, math
+nltk.download('punkt')
 from nltk import pos_tag, word_tokenize
 from pywsd import disambiguate
 from math import log
