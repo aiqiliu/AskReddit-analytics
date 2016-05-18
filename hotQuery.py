@@ -3,7 +3,9 @@ import requests
 import re
 import datetime
 import io_tools
+import nltk
 from pywsd import disambiguate
+
 # from nltk.corpus import wordnet as wn
 
 
@@ -211,7 +213,7 @@ def question_type_classifier(title):
 if __name__ == "__main__":
   sub = "AskReddit"
   sort_by = "hot"
-  number_of_posts = 25
+  number_of_posts = 2
 
   data = get_posts(sub, sort=sort_by, n=number_of_posts)
 
@@ -219,7 +221,9 @@ if __name__ == "__main__":
   sense_array = []
   # print data
   for d in data:
+    print d
     for sense in d['senses']:
+      print sense
       sense_array.append(sense)
   for d in data:
     for sense in d['senses']:
