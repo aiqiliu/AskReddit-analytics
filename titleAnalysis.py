@@ -15,28 +15,30 @@
 
 import nltk, math
 nltk.download('punkt')
+from nltk.corpus import wordnet as wn
 import csv, os, pickle
 from nltk.corpus import stopwords
 from nltk import pos_tag, word_tokenize
 from pywsd import disambiguate
 from math import log
 
-global hot_senses_dict, hot_token_dict, hot_sensens_total, hot_token_total
-hot_senses_dict = hot_token_dict = {}
-hot_sensens_total = hot_token_total = 0
+global hot_senses_dict, hot_token_dict, hot_senses_total, hot_token_total
+hot_senses_dict = {}
+hot_token_dict = {}
+hot_senses_total = hot_token_total = 0
 stop = stopwords.words('english')
 
 def train_senses_set(title):
-	global hot_senses_dict, hot_sensens_total
+	global hot_senses_dict, hot_senses_total
 	# extract the words that are not none with their synset
-	synset = [word[1] for word in disambiguate(str(title)) if word[1] is not None]
+	synset = [word[1].name() for word in disambiguate(str(title)) if word[1] is not None]
 	for instance in synset:
 		found = 0
 		if len(hot_senses_dict) != 0:
 			for sense in hot_senses_dict:
 				# loop throught exisiting senses in the dict
 				# compare token with current senses
-				similarity = sense.path_similarity(instance)
+				similarity = wn.synset(sense).path_similarity(wn.synset(instance))
 				if similarity is not None and similarity > 0.5:
 					hot_senses_dict[sense] += 1
 					found = 1
@@ -44,7 +46,7 @@ def train_senses_set(title):
 		# create new sense if no similar senses 
 		if found == 0:
 			hot_senses_dict[instance] = 1
-		hot_sensens_total += 1
+		hot_senses_total += 1
 	return hot_senses_dict
 
 def train_token_set(title):
@@ -72,7 +74,7 @@ def probability(tokens, category):
 	p = 0    	  
 	if category == "senses":
 		dic = hot_senses_dict
-		total_instances = hot_sensens_total
+		total_instances = hot_senses_total
 	else:
 		dic = hot_token_dict
 		total_instances = hot_token_total
@@ -93,14 +95,17 @@ def test():
 	# train_set("teacher")
 	# print hot_senses_dict == {Synset('teacher.n.02'): 1}
 	
-	# train_set("teacher")
-	# print hot_senses_dict == {Synset('teacher.n.02'): 2} 
+	train_senses_set("teacher")
+	train_senses_set("teacher")
+	print hot_senses_dict
+	print hot_senses_dict == {u'teacher.n.02': 2} 
 	print train_token_set("beautiful world") == {'world': 1, 'beautiful': 1}
-	print train_token_set("I am beautiful") == {'world': 1, 'beautiful': 2}
+	print train_token_set("I am beautiful") == {'world': 1, 'beautiful': 2 , 'I': 1}
 	print classify("China", "token") == 0
 
 if __name__ == "__main__":
-	# test()
+	test()
+	exit()
 	# a list of the csv file names 
 	fileList = []
 	for fFileObj in os.walk("./hot"): 
