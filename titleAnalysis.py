@@ -15,6 +15,8 @@
 
 import nltk, math
 nltk.download('punkt')
+import csv, os, pickle
+from nltk.corpus import stopwords
 from nltk import pos_tag, word_tokenize
 from pywsd import disambiguate
 from math import log
@@ -22,6 +24,7 @@ from math import log
 global hot_senses_dict, hot_token_dict, hot_sensens_total, hot_token_total
 hot_senses_dict = hot_token_dict = {}
 hot_sensens_total = hot_token_total = 0
+stop = stopwords.words('english')
 
 def train_senses_set(title):
 	global hot_senses_dict, hot_sensens_total
@@ -46,9 +49,11 @@ def train_senses_set(title):
 
 def train_token_set(title):
 	global hot_token_dict, hot_token_total
-	# only keep the words
-	synset = [word[0] for word in disambiguate(str(title)) if word[1] is not None]
-	for token in synset:
+	# only keep the useful words
+	tokens = word_tokenize(title)
+	tokens = [word for word in tokens if word not in stop]
+	tokens = filter(lambda word: word not in [',', '.', '!', '?', '``', "'ve", "''", "n't", "'s"], tokens)
+	for token in tokens:
 		if token in hot_token_dict:
 			hot_token_dict[token] += 1
 		else:
@@ -58,7 +63,9 @@ def train_token_set(title):
 
 def classify(text, category): #category = "senses" or "token"
     # seprate the text into tokens 
-    tokens = [word[0] for word in disambiguate(text) if word[1] is not None]
+    tokens = word_tokenize(text)
+    tokens = [word for word in tokens if word not in stop]
+    tokens = filter(lambda word: word not in [',', '.', '!', '?', '``', "'ve", "''", "n't", "'s"], tokens)
     return probability(tokens, category)
 
 def probability(tokens, category):
@@ -91,14 +98,46 @@ def test():
 	print train_token_set("beautiful world") == {'world': 1, 'beautiful': 1}
 	print train_token_set("I am beautiful") == {'world': 1, 'beautiful': 2}
 	print classify("China", "token") == 0
+
 if __name__ == "__main__":
-	test()
-	titles = ["Announcing our contest winner and some other stuff", "Redditors with great parents, What did they do RIGHT?"]
+	# test()
+	# a list of the csv file names 
+	fileList = []
+	for fFileObj in os.walk("./hot"): 
+		fileList = fFileObj[2]
+		break
+
+	fileList = fileList[1:] # get rid of the '.Dstore'
+	titles = []
+	# get titles from csv
+	for filename in fileList:
+		with open('./hot/' + filename, 'rb') as csvfile:			
+			reader = csv.reader(csvfile)
+			next(reader) # Ignore first row
+
+			for row in reader:
+				titles.append(row[5])
+	# train the tokens
 	for title in titles:
 		train_token_set(title)
-		# train_senses_set(title)
-	print classify("winner is cool", "token")
-	# print classify("winner is cool", "senses")
+	# save the dict into cache
+	f = open('cache.txt', "w")
+	p = pickle.Pickler(f)
+	p.dump([hot_senses_dict, hot_token_dict])
+	f.close()
+	print "training set saved into cache.txt"
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
