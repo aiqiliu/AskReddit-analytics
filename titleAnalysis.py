@@ -134,15 +134,10 @@ if __name__ == "__main__":
 				titles.append(row[5])
 	print "Training dataset..."
 	# train the tokens
-	i = 0
 	for title in titles:
 		print title
 		train_senses_set(title)
 		train_token_set(title)
-		i += 1
-		if i > 25:
-			break
-		
 
 	print "Writing to cache..."
 	# save the dict into cache
@@ -156,14 +151,10 @@ if __name__ == "__main__":
 	cached_hot_senses_dict, cached_hot_token_dict, cached_hot_token_total = pickle.load(open("cache.p", "rb"))
 
 	print "Classify..."
-	i = 0
 	for title in titles:
 		print title
 		print "sense score: " + str(classify(title,"sense",cached_hot_senses_dict))
 		print "token score: " + str(classify(title,"token",cached_hot_token_dict, cached_hot_token_total))
-		i += 1
-		if i > 25:
-			break
 		
 	
 
