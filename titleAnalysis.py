@@ -65,7 +65,7 @@ def train_token_set(title):
 
 def classify(text, category): #category = "senses" or "token"
     # seprate the text into tokens 
-    if category == "senses":
+    if category == "sense":
     	tokens = [word[1].name() for word in disambiguate(text) if word[1] is not None]
     else:
     	tokens = word_tokenize(text)
@@ -75,7 +75,7 @@ def classify(text, category): #category = "senses" or "token"
 
 def probability(tokens, category):
 	p = 0    	  
-	if category == "senses":
+	if category == "sense":
 		dic = hot_senses_dict
 		total_instances = hot_senses_total
 	else:
@@ -151,6 +151,19 @@ if __name__ == "__main__":
 	p.dump([hot_senses_dict, hot_token_dict])
 	f.close()
 	print "training set saved into cache.p"
+
+	#Check if you can read dictionaries
+	# cached_hot_senses_dict, cached_hot_token_dict = pickle.load(open("cache.p", "rb"))
+	# print cached_hot_token_dict == hot_token_dict
+	# print cached_hot_senses_dict == hot_senses_dict
+
+	print "Classify..."
+	for title in titles:
+		print title
+		print "token score:" + str(classify(title,"token"))
+		print "sense score:" + str(classify(title,"sense"))
+	
+
 
 
 
