@@ -22,14 +22,14 @@ from nltk import pos_tag, word_tokenize
 from pywsd import disambiguate
 from math import log
 
-global hot_senses_dict, hot_token_dict, hot_senses_total, hot_token_total
+global hot_senses_dict, hot_token_dict, hot_token_total
 hot_senses_dict = {}
 hot_token_dict = {}
-hot_senses_total = hot_token_total = 0
+hot_token_total = 0
 stop = stopwords.words('english')
 
 def train_senses_set(title):
-	global hot_senses_dict, hot_senses_total
+	global hot_senses_dict
 	# extract the words that are not none with their synset
 	senses = [word[1].name() for word in disambiguate(str(title)) if word[1] is not None]
 	for sense in senses:
@@ -37,7 +37,6 @@ def train_senses_set(title):
 			hot_senses_dict[sense] += 1
 		else:
 			hot_senses_dict[sense] = 1
-		hot_senses_total += 1
 	return hot_senses_dict
 
 def train_token_set(title):
@@ -54,7 +53,7 @@ def train_token_set(title):
 		hot_token_total += 1
 	return hot_token_dict
 
-def classify(text, category): #category = "senses" or "token"
+def classify(text, category, dictionary, total = 0): #category = "senses" or "token"
     # seprate the text into tokens 
     if category == "sense":
     	tokens = [word[1].name() for word in disambiguate(text) if word[1] is not None]
@@ -62,23 +61,22 @@ def classify(text, category): #category = "senses" or "token"
     	tokens = word_tokenize(text)
     	tokens = [word for word in tokens if word not in stop]
     	tokens = filter(lambda word: word not in [',', '.', '!', '?', '``', "'ve", "''", "n't", "'s"], tokens)
-    return probability(tokens, category)
+    return probability(tokens, category, dictionary, total)
 
-def probability(tokens, category):   	  
+def probability(tokens, category, dictionary, total):   	  
 	if category == "sense":
 		total_score = 0
-		dic = hot_senses_dict
-		total_instances = hot_senses_total
+		dic = dictionary
 		for token in tokens:
-			for dict_sense in hot_senses_dict:
+			for dict_sense in dic:
 				score = wn.synset(token).path_similarity(wn.synset(dict_sense))
 				if score is not None:
-					total_score += score * hot_senses_dict[dict_sense]
+					total_score += score * dic[dict_sense]
 		return total_score
 	else:
 		p = 0 
-		dic = hot_token_dict
-		total_instances = hot_token_total
+		dic = dictionary
+		total_instances = total
 		for token in tokens:
 		    if token in dic:
 		    	token_prob = dic[token]
@@ -93,7 +91,7 @@ def probability(tokens, category):
 
 def unit_tests():
 	print "Running Unit Tests..."
-	global hot_senses_dict, hot_token_dict
+	global hot_senses_dict, hot_token_dict, hot_token_total
 	# train_set("teacher")
 	# print hot_senses_dict == {Synset('teacher.n.02'): 1}
 	
@@ -102,10 +100,10 @@ def unit_tests():
 	print hot_senses_dict == {u'teacher.n.02': 2} 
 	print train_token_set("beautiful world") == {'world': 1, 'beautiful': 1}
 	print train_token_set("I am beautiful") == {'world': 1, 'beautiful': 2 , 'I': 1}
-	print classify("China", "token") == 0
-	print classify("I","token") == 0.25
-	print classify("beautiful","token") == 0.5
-	print classify("teacher","sense") == 2.0
+	print classify("China", "token", hot_token_dict, hot_token_total) == 0
+	print classify("I","token", hot_token_dict, hot_token_total) == 0.25
+	print classify("beautiful","token", hot_token_dict, hot_token_total) == 0.5
+	print classify("teacher","sense", hot_senses_dict) == 2.0
 
 	print hot_senses_dict
 	print hot_token_dict
@@ -139,37 +137,34 @@ if __name__ == "__main__":
 	i = 0
 	for title in titles:
 		print title
-		train_token_set(title)
 		train_senses_set(title)
+		train_token_set(title)
 		i += 1
 		if i > 25:
 			break
+		
 
-	print hot_senses_dict
-	print hot_token_dict
+	print "Writing to cache..."
+	# save the dict into cache
+	f = open('cache.p', "w")
+	p = pickle.Pickler(f)
+	p.dump([hot_senses_dict, hot_token_dict, hot_token_total])
+	f.close()
+	print "training set saved into cache.p"
 
-	# print "Writing to cache..."
-	# # save the dict into cache
-	# f = open('cache.p', "w")
-	# p = pickle.Pickler(f)
-	# p.dump([hot_senses_dict, hot_token_dict])
-	# f.close()
-	# print "training set saved into cache.p"
-
-	#Check if you can read dictionaries
-	# cached_hot_senses_dict, cached_hot_token_dict = pickle.load(open("cache.p", "rb"))
-	# print cached_hot_token_dict == hot_token_dict
-	# print cached_hot_senses_dict == hot_senses_dict
+	# Check if you can read dictionaries
+	cached_hot_senses_dict, cached_hot_token_dict, cached_hot_token_total = pickle.load(open("cache.p", "rb"))
 
 	print "Classify..."
 	i = 0
 	for title in titles:
 		print title
-		print "token score: " + str(classify(title,"token"))
-		print "sense score: " + str(classify(title,"sense"))
+		print "sense score: " + str(classify(title,"sense",cached_hot_senses_dict))
+		print "token score: " + str(classify(title,"token",cached_hot_token_dict, cached_hot_token_total))
 		i += 1
 		if i > 25:
 			break
+		
 	
 
 
