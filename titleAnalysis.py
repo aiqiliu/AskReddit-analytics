@@ -31,21 +31,12 @@ stop = stopwords.words('english')
 def train_senses_set(title):
 	global hot_senses_dict, hot_senses_total
 	# extract the words that are not none with their synset
-	synset = [word[1].name() for word in disambiguate(str(title)) if word[1] is not None]
-	for instance in synset:
-		found = 0
-		if len(hot_senses_dict) != 0:
-			for sense in hot_senses_dict:
-				# loop throught exisiting senses in the dict
-				# compare token with current senses
-				similarity = wn.synset(sense).path_similarity(wn.synset(instance))
-				if similarity is not None and similarity > 0.5:
-					hot_senses_dict[sense] += 1
-					found = 1
-					break
-		# create new sense if no similar senses 
-		if found == 0:
-			hot_senses_dict[instance] = 1
+	senses = [word[1].name() for word in disambiguate(str(title)) if word[1] is not None]
+	for sense in senses:
+		if sense in hot_senses_dict:
+			hot_senses_dict[sense] += 1
+		else:
+			hot_senses_dict[sense] = 1
 		hot_senses_total += 1
 	return hot_senses_dict
 
@@ -73,24 +64,30 @@ def classify(text, category): #category = "senses" or "token"
     	tokens = filter(lambda word: word not in [',', '.', '!', '?', '``', "'ve", "''", "n't", "'s"], tokens)
     return probability(tokens, category)
 
-def probability(tokens, category):
-	p = 0    	  
+def probability(tokens, category):   	  
 	if category == "sense":
+		total_score = 0
 		dic = hot_senses_dict
 		total_instances = hot_senses_total
+		for token in tokens:
+			for dict_sense in hot_senses_dict:
+				score = wn.synset(token).path_similarity(wn.synset(dict_sense))
+				if score is not None:
+					total_score += score * hot_senses_dict[dict_sense]
+		return total_score
 	else:
+		p = 0 
 		dic = hot_token_dict
 		total_instances = hot_token_total
-	  
-	for token in tokens:
-	    if token in dic:
-	    	token_prob = dic[token]
-	    else:
-	    	token_prob = 0
-	    # smooth one out
-	    curr = token_prob/float(total_instances)
-	    p += curr 
-
+		for token in tokens:
+		    if token in dic:
+		    	token_prob = dic[token]
+		    else:
+		    	token_prob = 0
+		    # smooth one out
+		    curr = token_prob/float(total_instances)
+		    p += curr  
+	
 	return p
 
 
@@ -108,7 +105,10 @@ def unit_tests():
 	print classify("China", "token") == 0
 	print classify("I","token") == 0.25
 	print classify("beautiful","token") == 0.5
-	print classify("teacher","senses") == 1.0
+	print classify("teacher","sense") == 2.0
+
+	print hot_senses_dict
+	print hot_token_dict
 
 	#clear dictionaries
 	hot_senses_dict = {}
@@ -116,6 +116,7 @@ def unit_tests():
 
 if __name__ == "__main__":
 	unit_tests()
+	# exit()
 	# a list of the csv file names 
 	fileList = []
 	for fFileObj in os.walk("./hot"): 
@@ -144,13 +145,16 @@ if __name__ == "__main__":
 		if i > 25:
 			break
 
-	print "Writing to cache..."
-	# save the dict into cache
-	f = open('cache.p', "w")
-	p = pickle.Pickler(f)
-	p.dump([hot_senses_dict, hot_token_dict])
-	f.close()
-	print "training set saved into cache.p"
+	print hot_senses_dict
+	print hot_token_dict
+
+	# print "Writing to cache..."
+	# # save the dict into cache
+	# f = open('cache.p', "w")
+	# p = pickle.Pickler(f)
+	# p.dump([hot_senses_dict, hot_token_dict])
+	# f.close()
+	# print "training set saved into cache.p"
 
 	#Check if you can read dictionaries
 	# cached_hot_senses_dict, cached_hot_token_dict = pickle.load(open("cache.p", "rb"))
@@ -158,10 +162,14 @@ if __name__ == "__main__":
 	# print cached_hot_senses_dict == hot_senses_dict
 
 	print "Classify..."
+	i = 0
 	for title in titles:
 		print title
-		print "token score:" + str(classify(title,"token"))
-		print "sense score:" + str(classify(title,"sense"))
+		print "token score: " + str(classify(title,"token"))
+		print "sense score: " + str(classify(title,"sense"))
+		i += 1
+		if i > 25:
+			break
 	
 
 
