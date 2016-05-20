@@ -9,9 +9,7 @@
 #      2. Create some sort of Synset object (not sure if it works)
 
 # TO DO:
-# write function to read titles from csv
-# train the actual data sets 
-# save the cache of the training info so that the classification can just load the dicts
+# Fix senses classifier to use total again (May not matter, but would be nice to have number between 0 and 1)
 
 import nltk, math
 nltk.download('punkt')
@@ -21,6 +19,8 @@ from nltk.corpus import stopwords
 from nltk import pos_tag, word_tokenize
 from pywsd import disambiguate
 from math import log
+import matplotlib.pyplot as plt
+
 
 global hot_senses_dict, hot_token_dict, hot_token_total
 hot_senses_dict = {}
@@ -67,12 +67,14 @@ def probability(tokens, category, dictionary, total):
 	if category == "sense":
 		total_score = 0
 		dic = dictionary
+		if len(tokens) == 0:
+			return 0
 		for token in tokens:
 			for dict_sense in dic:
 				score = wn.synset(token).path_similarity(wn.synset(dict_sense))
 				if score is not None:
 					total_score += score * dic[dict_sense]
-		return total_score
+		return (total_score/len(tokens))
 	else:
 		p = 0 
 		dic = dictionary
@@ -134,27 +136,41 @@ if __name__ == "__main__":
 				titles.append(row[5])
 	print "Training dataset..."
 	# train the tokens
-	for title in titles:
-		print title
-		train_senses_set(title)
-		train_token_set(title)
+	# for title in titles:
+	# 	print title
+	# 	train_senses_set(title)
+	# 	train_token_set(title)
 
-	print "Writing to cache..."
-	# save the dict into cache
-	f = open('cache.p', "w")
-	p = pickle.Pickler(f)
-	p.dump([hot_senses_dict, hot_token_dict, hot_token_total])
-	f.close()
-	print "training set saved into cache.p"
+	# print "Writing to cache..."
+	# # save the dict into cache
+	# f = open('cache.p', "w")
+	# p = pickle.Pickler(f)
+	# p.dump([hot_senses_dict, hot_token_dict, hot_token_total])
+	# f.close()
+	# print "training set saved into cache.p"
 
 	# Check if you can read dictionaries
 	cached_hot_senses_dict, cached_hot_token_dict, cached_hot_token_total = pickle.load(open("cache.p", "rb"))
 
 	print "Classify..."
+	sense_scores = []
+	token_scores = []
 	for title in titles:
 		print title
-		print "sense score: " + str(classify(title,"sense",cached_hot_senses_dict))
-		print "token score: " + str(classify(title,"token",cached_hot_token_dict, cached_hot_token_total))
+		sense_scores.append(classify(title,"sense",cached_hot_senses_dict))
+		token_scores.append(classify(title,"token",cached_hot_token_dict, cached_hot_token_total))
+
+	
+	plt.hist(sense_scores, 50, normed=1, facecolor='red', alpha=0.75)
+
+	plt.grid(True)
+	plt.show()
+
+	plt.hist(token_scores, 50, normed=1, facecolor='green', alpha=0.75)
+	plt.grid(True)
+	plt.show()
+
+
 		
 	
 
