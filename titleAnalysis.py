@@ -116,9 +116,6 @@ def unit_tests():
 
 if __name__ == "__main__":
 	unit_tests()
-	print hot_senses_dict
-	print hot_token_dict
-	exit()
 	# a list of the csv file names 
 	fileList = []
 	for fFileObj in os.walk("./hot"): 
@@ -129,21 +126,31 @@ if __name__ == "__main__":
 	titles = []
 	# get titles from csv
 	for filename in fileList:
+		print "Reading " + filename + "..."
 		with open('./hot/' + filename, 'rb') as csvfile:			
 			reader = csv.reader(csvfile)
 			next(reader) # Ignore first row
 
 			for row in reader:
 				titles.append(row[5])
+	print "Training dataset..."
 	# train the tokens
+	i = 0
 	for title in titles:
+		print title
 		train_token_set(title)
+		train_senses_set(title)
+		i += 1
+		if i > 25:
+			break
+
+	print "Writing to cache..."
 	# save the dict into cache
-	f = open('cache.txt', "w")
+	f = open('cache.p', "w")
 	p = pickle.Pickler(f)
 	p.dump([hot_senses_dict, hot_token_dict])
 	f.close()
-	print "training set saved into cache.txt"
+	print "training set saved into cache.p"
 
 
 
