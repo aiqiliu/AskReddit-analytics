@@ -65,9 +65,12 @@ def train_token_set(title):
 
 def classify(text, category): #category = "senses" or "token"
     # seprate the text into tokens 
-    tokens = word_tokenize(text)
-    tokens = [word for word in tokens if word not in stop]
-    tokens = filter(lambda word: word not in [',', '.', '!', '?', '``', "'ve", "''", "n't", "'s"], tokens)
+    if category == "senses":
+    	tokens = [word[1].name() for word in disambiguate(text) if word[1] is not None]
+    else:
+    	tokens = word_tokenize(text)
+    	tokens = [word for word in tokens if word not in stop]
+    	tokens = filter(lambda word: word not in [',', '.', '!', '?', '``', "'ve", "''", "n't", "'s"], tokens)
     return probability(tokens, category)
 
 def probability(tokens, category):
@@ -91,20 +94,30 @@ def probability(tokens, category):
 	return p
 
 
-def test():
+def unit_tests():
+	print "Running Unit Tests..."
+	global hot_senses_dict, hot_token_dict
 	# train_set("teacher")
 	# print hot_senses_dict == {Synset('teacher.n.02'): 1}
 	
 	train_senses_set("teacher")
 	train_senses_set("teacher")
-	print hot_senses_dict
 	print hot_senses_dict == {u'teacher.n.02': 2} 
 	print train_token_set("beautiful world") == {'world': 1, 'beautiful': 1}
 	print train_token_set("I am beautiful") == {'world': 1, 'beautiful': 2 , 'I': 1}
 	print classify("China", "token") == 0
+	print classify("I","token") == 0.25
+	print classify("beautiful","token") == 0.5
+	print classify("teacher","senses") == 1.0
+
+	#clear dictionaries
+	hot_senses_dict = {}
+	hot_token_dict = {}
 
 if __name__ == "__main__":
-	test()
+	unit_tests()
+	print hot_senses_dict
+	print hot_token_dict
 	exit()
 	# a list of the csv file names 
 	fileList = []
