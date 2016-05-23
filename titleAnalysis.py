@@ -22,13 +22,20 @@ from math import log
 import matplotlib.pyplot as plt
 
 
-global hot_senses_dict, hot_token_dict, hot_token_total
+global hot_senses_dict, hot_token_dict, hot_token_total, random_senses_dict, random_token_dict, random_token_total
 hot_senses_dict = {}
 hot_token_dict = {}
 hot_token_total = 0
+random_senses_dict = {}
+random_token_dict = {}
+random_token_total = 0
 stop = stopwords.words('english')
 
-def train_senses_set(title):
+#5/23/16 - got a little lazy and copied functions that can be reused
+# such as train_senses_set and train_token_set. Will fix at some point
+# Sameer
+
+def train_hot_senses_set(title):
 	global hot_senses_dict
 	# extract the words that are not none with their synset
 	senses = [word[1].name() for word in disambiguate(str(title)) if word[1] is not None]
@@ -39,7 +46,7 @@ def train_senses_set(title):
 			hot_senses_dict[sense] = 1
 	return hot_senses_dict
 
-def train_token_set(title):
+def train_hot_token_set(title):
 	global hot_token_dict, hot_token_total
 	# only keep the useful words
 	tokens = word_tokenize(title)
@@ -52,6 +59,31 @@ def train_token_set(title):
 			hot_token_dict[token] = 1
 		hot_token_total += 1
 	return hot_token_dict
+
+def train_random_senses_set(title):
+	global random_senses_dict
+	# extract the words that are not none with their synset
+	senses = [word[1].name() for word in disambiguate(str(title)) if word[1] is not None]
+	for sense in senses:
+		if sense in random_senses_dict:
+			random_senses_dict[sense] += 1
+		else:
+			random_senses_dict[sense] = 1
+	return random_senses_dict
+
+def train_random_token_set(title):
+	global random_token_dict, random_token_total
+	# only keep the useful words
+	tokens = word_tokenize(title)
+	tokens = [word for word in tokens if word not in stop]
+	tokens = filter(lambda word: word not in [',', '.', '!', '?', '``', "'ve", "''", "n't", "'s"], tokens)
+	for token in tokens:
+		if token in random_token_dict:
+			random_token_dict[token] += 1
+		else:
+			random_token_dict[token] = 1
+		random_token_total += 1
+	return random_token_dict
 
 def classify(text, category, dictionary, total = 0): #category = "senses" or "token"
     # seprate the text into tokens 
@@ -92,49 +124,112 @@ def probability(tokens, category, dictionary, total):
 
 
 def unit_tests():
-	print "Running Unit Tests..."
+	print "\nRunning Unit Tests..."
 	global hot_senses_dict, hot_token_dict, hot_token_total
 	# train_set("teacher")
 	# print hot_senses_dict == {Synset('teacher.n.02'): 1}
 	
-	train_senses_set("teacher")
-	train_senses_set("teacher")
+	train_hot_senses_set("teacher")
+	train_hot_senses_set("teacher")
 	print hot_senses_dict == {u'teacher.n.02': 2} 
-	print train_token_set("beautiful world") == {'world': 1, 'beautiful': 1}
-	print train_token_set("I am beautiful") == {'world': 1, 'beautiful': 2 , 'I': 1}
+	print train_hot_token_set("beautiful world") == {'world': 1, 'beautiful': 1}
+	print train_hot_token_set("I am beautiful") == {'world': 1, 'beautiful': 2 , 'I': 1}
 	print classify("China", "token", hot_token_dict, hot_token_total) == 0
 	print classify("I","token", hot_token_dict, hot_token_total) == 0.25
 	print classify("beautiful","token", hot_token_dict, hot_token_total) == 0.5
 	print classify("teacher","sense", hot_senses_dict) == 2.0
 
-	print hot_senses_dict
-	print hot_token_dict
+	# print hot_senses_dict
+	# print hot_token_dict
 
 	#clear dictionaries
 	hot_senses_dict = {}
 	hot_token_dict = {}
 
-if __name__ == "__main__":
-	unit_tests()
-	# exit()
-	# a list of the csv file names 
-	fileList = []
-	for fFileObj in os.walk("./hot"): 
-		fileList = fFileObj[2]
-		break
-
-	fileList = fileList[1:] # get rid of the '.Dstore'
-	titles = []
+def build_dictionaries():
+	print "\nBuilding dictionaries..."
+	#Manually list out files in DATA folder
+	fileList = ['devDataMay1to4.csv','devDataMay16to18.csv']
+	hot_titles = []
+	random_titles = []
 	# get titles from csv
 	for filename in fileList:
 		print "Reading " + filename + "..."
-		with open('./hot/' + filename, 'rb') as csvfile:			
+		with open('./DATA/' + filename, 'rU') as csvfile:			
 			reader = csv.reader(csvfile)
 			next(reader) # Ignore first row
 
 			for row in reader:
-				titles.append(row[5])
-	print "Training dataset..."
+				if int(row[9]): #Check if it is hot or random
+					hot_titles.append(row[5])
+				else:
+					random_titles.append(row[5])
+	
+	#Fill dictionaries
+	print 'Filling dictionaries...'
+	for title in hot_titles:
+		print title
+		train_hot_senses_set(title)
+		train_hot_token_set(title)
+
+	for title in random_titles:
+		print title
+		train_random_senses_set(title)
+		train_random_token_set(title)
+
+	#Write to cache
+	print "Writing to cache..."
+	f = open('hot_cache.p', "w")
+	p = pickle.Pickler(f)
+	p.dump([hot_senses_dict, hot_token_dict, hot_token_total])
+	f.close()
+	print "training set saved into cache.p"
+
+	f = open('random_cache.p', "w")
+	p = pickle.Pickler(f)
+	p.dump([random_senses_dict, random_token_dict, random_token_total])
+	f.close()
+	print "training set saved into random.p"
+
+def classify_data():
+	#Get cached data
+	cached_hot_senses_dict, cached_hot_token_dict, cached_hot_token_total = pickle.load(open("hot_cache.p", "rb"))
+
+	cached_random_senses_dict, cached_random_token_dict,cached_random_token_total = pickle.load(open("random_cache.p", "rb"))
+
+	#Get data to classify
+	fileList = ['devDataMay1to4','devDataMay16to18']
+	# get titles from csv
+	headers = ['hot_sense_score','hot_token_score','random_sense_score','random_token_score']
+	for filename in fileList:
+		print "Reading " + filename + ".csv and..."
+		print "Writing " + filename + "_nlp.csv..."
+		with open('./DATA/' + filename + '.csv', 'rU') as csvfile_read:	#Read CSV
+			with open('./DATA/' + filename + '_nlp.csv', 'wb') as csvfile_write:
+				reader = csv.reader(csvfile_read)
+				writer = csv.writer(csvfile_write)
+				writer.writerow(next(reader) + headers) # Write header
+				for row in reader:
+					scores = []
+					scores.append(classify(row[5],"sense",cached_hot_senses_dict))
+					scores.append(classify(row[5],"token",cached_hot_token_dict, cached_hot_token_total))
+					scores.append(classify(row[5],"sense",cached_random_senses_dict))
+					scores.append(classify(row[5],"token",cached_random_token_dict, cached_random_token_total))
+					writer.writerow(row + scores)
+					print scores
+
+
+	
+
+
+
+if __name__ == "__main__":
+	unit_tests()
+	#build_dictionaries()
+	classify_data()	
+
+	exit()
+	
 	# train the tokens
 	# for title in titles:
 	# 	print title
