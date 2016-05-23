@@ -1,0 +1,212 @@
+@relation training
+
+@ATTRIBUTE 'author_link_karma' NUMERIC
+@ATTRIBUTE 'time_to_first_comment' DATE "HH:mm:ss"
+@ATTRIBUTE 'post_localTime' DATE "HH:mm"
+@ATTRIBUTE 'author_comment_karma' NUMERIC
+@ATTRIBUTE 'title' STRING
+@ATTRIBUTE 'author_account_age' NUMERIC
+@ATTRIBUTE 'title_length' NUMERIC
+@ATTRIBUTE 'post_id' STRING
+@ATTRIBUTE 'hot' {0, 1}
+@ATTRIBUTE 'nsfw' {0, 1}
+@ATTRIBUTE '10min_comment' NUMERIC
+@ATTRIBUTE 'serious' {0, 1}
+@ATTRIBUTE 'post_utcTime' DATE "HH:mm"
+@ATTRIBUTE 'author_gold' NUMERIC
+@ATTRIBUTE 'what' {TRUE, FALSE}
+@ATTRIBUTE 'who' {TRUE, FALSE}
+@ATTRIBUTE 'when' {TRUE, FALSE}
+@ATTRIBUTE 'where' {TRUE, FALSE}
+@ATTRIBUTE 'why' {TRUE, FALSE}
+@ATTRIBUTE 'how' {TRUE, FALSE}
+@ATTRIBUTE 'which' {TRUE, FALSE}
+
+@data
+1730,0:00:41,23:30,2854,"What joke is hilarious but takes a few seconds to get?",89,11,4h629u,1,0,5,0,15:30,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+21,0:00:32,0:44,145,"What would be the most outrageously awesome workshop adventure in your city?",467,12,4h6cpf,0,0,2,0,16:44,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:00:47,0:45,669,"Whats the farthest youve gone to impress a crush?",148,9,4h6cu1,1,0,10,0,16:45,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+22,0:00:22,1:02,809,"What didnt you notice about yourself until someone told you?",104,10,4h6f67,0,0,4,0,17:02,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+5381,0:00:59,1:06,17569,"What movie title best describes your genitals?",1655,7,4h6flw,0,0,13,0,17:06,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+6,0:00:18,1:11,4765,"What show surpassed your expectations for it?",1039,7,4h6gfc,0,0,6,0,17:11,1,TRUE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+197,0:00:00,1:33,2059,"Redditors who lost weight what are some uncommon effects youve noticed?",856,11,4h6jjc,0,0,2,1,17:33,0,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE
+17,0:01:01,1:40,3366,"Whats the strangest compliment youve ever been given?",603,8,4h6kdq,0,0,10,0,17:40,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+672,0:00:20,1:42,1437,"Whats a movie every dad should watch with their teenaged son?",1148,11,4h6ksb,0,0,8,0,17:42,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1789,0:01:08,1:43,24192,"Women of reddit what are the ways you show men youre interested?",695,12,4h6kt9,1,0,6,0,17:43,0,TRUE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+1,0:02:00,2:05,0,"People of Reddit what is a TV show you recommend to everyone?",264,12,4h6nsc,0,0,6,0,18:05,0,TRUE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+4,0:01:00,2:11,1378,"Redditors over 30 years old: Do you still talk to your best friend from high school? Why or why not?",1158,20,4h6oj1,0,0,7,0,18:11,0,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE,FALSE
+1,0:00:50,2:49,90,"Redditors How Do You Deal With Sadness or Depression?",758,9,4h6tnz,0,0,13,0,18:49,0,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+1,0:00:27,3:56,9508,"Which movie has your favorite soundtrack?",612,6,4h72ay,0,0,14,0,19:56,0,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE
+1,0:01:54,4:23,856,"What are the unspoken  unofficial rules of Reddit?",72,9,4h75sr,0,0,4,0,20:23,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+3390,0:00:16,4:47,2435,"What is something that has been accepted as a social norm that bugs you?",1,14,4h78qo,0,0,11,0,20:47,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+18,0:00:42,5:25,3286,"You wake up in England 1350 AD. Whats the first thing the locals notice about you that gets you tried as a witch?",721,23,4h7dio,0,0,6,0,21:25,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+17,0:02:17,7:56,752,"Whats the best way to cope with the reality that you and everyone you love is going to cease to exist at some point and that one day none of our lives will have mattered at all?",543,37,4h7tsg,0,0,7,0,23:56,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+655,0:00:36,9:58,1091,"Reddit what is your politically incorrect view on gender sex and discrimination?",183,12,4h84kd,0,1,4,0,1:58,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+337,0:00:07,10:04,7016,"AskReddit announces an unoriginality contest. What do you post/comment in order to win?",63,13,4h8502,1,0,5,0,2:04,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+39,0:00:19,10:32,108,"What do you know about Poland?",119,6,4h8728,0,0,14,0,2:32,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+11,0:00:56,10:46,404,"If you could call yourself five years ago and had 30 seconds what would you say?",44,16,4h883u,1,0,6,0,2:46,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:00:32,10:50,13736,"Youve just created a new sexual position. Whats it called?",4,10,4h88gc,0,1,8,0,2:50,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+5,0:00:48,10:52,6,"If everyone on earth who is male suddenly disappeared What would society look like in 5 years?",141,17,4h88k7,0,0,9,0,2:52,0,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE
+2378,0:01:55,11:51,2931,"What huge thing happened that almost no one knows about?",262,10,4h8d11,1,0,2,0,3:51,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:00:27,13:43,23,"What quote do you live by?",30,6,4h8l5z,1,0,7,0,5:43,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1205,0:00:22,14:06,1150,"Whats one trend you hope dies within this year?",344,9,4h8mxk,1,0,13,0,6:06,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:00:22,14:20,1222,"What is your best Roses are red violets are blue poem?",11,11,4h8o0d,0,0,8,0,6:20,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:02:46,14:55,1525,"Whats the creepiest thing youve ever seen on reddit?",123,9,4h8qv1,0,1,1,0,6:55,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+7,0:00:32,14:57,743,"Men of reddit what are the ways you show women youre interested?",818,12,4h8r32,1,0,8,0,6:57,0,TRUE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+72,0:01:42,15:38,1023,"Whats the funniest gross pick-up line you can think of?",586,10,4h8v5i,1,0,4,0,7:38,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1012,0:01:43,15:45,87,"what is your favorite smell?",1217,5,4h8vtk,1,0,9,0,7:45,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+755,0:00:14,15:48,2080,"Whats the best non-sexual feeling in the world?",21,8,4h8w3x,1,1,15,0,7:48,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+9066,0:00:18,15:53,48457,"Men of Reddit how can we women show you we are interested in you?",184,14,4h8wmo,0,0,12,0,7:53,0,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+498,0:00:27,16:05,18,"Whats in your left hand right now?",117,7,4h8xxe,0,0,15,0,8:05,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+350,0:02:09,16:18,567,"What is a book everyone must read?",964,7,4h8zag,1,0,4,0,8:18,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+4131,0:00:15,16:24,4452,"Whats something completely normal thats actually really weird if you think about it?",917,13,4h901q,1,0,9,0,8:24,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:00:22,17:53,4619,"What sports would be much more interesting if all the participants have to take 7 shots of vodka before starting?",197,20,4h9cnu,1,0,9,0,9:53,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+485,0:00:36,18:36,260,"What do you silently judge people for?",384,7,4h9kc3,1,0,8,0,10:36,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+8533,0:46:17,20:00,12524,"Relatives of murderers what memories stand out as red flags?",828,10,4ha0er,1,0,0,0,12:00,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:01:46,20:48,128,"If subreddits were people which two would have the most interesting fight to the death?",31,15,4haaqk,1,0,1,0,12:48,0,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE
+6482,0:00:13,21:09,14749,"What was the worst fast food chain youve eaten at?",154,10,4haf8d,1,0,7,0,13:09,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+59,0:00:33,21:32,335,"How do you beat loneliness?",298,5,4hakda,1,0,10,0,13:32,0,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+46,0:00:52,21:50,9960,"Reddditors who have had sex with famous people what was the best and worst part after the experience?",293,18,4haoo5,1,1,5,0,13:50,1,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE
+1594,0:00:44,21:51,876,"Whats the biggest mistake people make when studying for an exam?",452,11,4hap3q,1,0,4,0,13:51,0,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE
+69,0:00:00,22:49,868,"What are some good brands to avoid due to bad ethics?",542,11,4hb2nk,1,0,3,1,14:49,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+91,0:12:15,22:51,452,"You can wish some kind of tiny convenience onto someone (e.g. good hair first try) what do you wish onto them and who receives it?",398,25,4hb2y1,1,0,0,0,14:51,0,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE
+59,0:01:13,23:06,84,"Redditors with anxiety what is an (otherwise uninteresting/common) thing that triggers your anxiety?",1115,13,4hb6r3,0,0,6,0,15:06,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:00:27,0:59,911,"Women attracted to women what do you pay attention to to see if a girls not straight?",272,17,4hbwiq,0,0,4,0,16:59,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+3115,0:01:18,1:39,568,"What is your all-time favorite line from a song?",226,9,4hc5wq,0,0,8,0,17:39,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:01:32,2:00,410,"What is the hardest class you ever took?",0,8,4hcapn,0,0,6,0,18:00,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:00:24,2:20,3979,"What is your favorite quote from a video game?",164,9,4hcf1n,0,0,9,0,18:20,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+2304,0:00:38,2:27,4085,"Who do you think has a voice that is the most mismatched to their face?",2558,15,4hcgpy,0,0,4,0,18:27,0,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE
+8480,0:00:44,3:12,3268,"What do most people not do but should?",378,8,4hcqis,0,0,5,0,19:12,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+301,0:00:18,5:00,843,"Whats the worst movie you ever watched?",132,7,4hdeqv,0,0,14,0,21:00,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1963,0:19:46,5:53,94,"Parents of Reddit what is the weirdest thing youve caught your child doing?",672,13,4hdqzw,1,1,0,0,21:53,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:00:44,6:14,64,"Whats your best story of a moment when someone displayed a complete lack of common sense?",371,16,4hdvha,0,0,3,0,22:14,0,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE
+1,0:01:26,6:32,82,"What is a tasty snack that can be eaten in large quantities with little to no weight consequences?",964,18,4hdz9u,0,0,10,0,22:32,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+245,0:01:17,8:58,69627,"You can have an extra body part. What and where is it?",1649,12,4hescq,0,0,1,0,0:58,0,TRUE,FALSE,FALSE,TRUE,FALSE,FALSE,FALSE
+3256,0:19:11,9:34,8666,"Parents who have checked their childs internet history what is the weirdest or most fucked-up thing you found on it?",870,20,4hez3z,1,1,0,0,1:34,0,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE
+40,0:00:01,10:07,21400,"Hey Reddit if you could choose your death what would it be?",812,12,4hf56j,0,0,10,1,2:07,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:00:00,12:02,10025,"Redditors who have been kidnapped: what was it like and how did you escape?",514,14,4hfpa2,1,0,1,1,4:02,0,TRUE,TRUE,FALSE,FALSE,FALSE,TRUE,FALSE
+40,0:01:00,12:26,146,"If they made a movie based on your life what would the reviews say about it?",214,16,4hftrd,0,0,6,0,4:26,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:00:40,12:29,-43,"If you dont believe in God why?",173,7,4hfuea,0,0,14,0,4:29,0,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE,FALSE
+27658,0:04:31,13:55,30595,"Sleepwalkers what is the strangest incident of you wandering around?",1442,10,4hga70,0,0,3,0,5:55,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:04:30,14:04,1777,"Experienced Redditors one advice that you would give to the ones who joined very recently?",224,15,4hgbw6,0,0,3,0,6:04,0,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE
+172,0:00:30,14:09,3299,"What is something thats been taken too far?",822,8,4hgcv5,0,0,10,0,6:09,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+135,0:00:58,14:13,1052,"Educated reddit folk what is the quickest way to improve your vocabulary?",160,12,4hgdry,0,0,10,0,6:13,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+2448,0:00:13,14:23,11,"Reddit what is your greatest irrational fear?",21,7,4hgfll,1,0,16,0,6:23,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:00:39,14:29,408,"Apart from using a q-tip to itch you arsehole..... What is a good life hack that you wouldnt want anybody to know it was used by you?",14,27,4hggo6,1,1,4,0,6:29,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:04:49,15:23,10017,"Whats the smallest thing someone has done that made you really really happy?",134,13,4hgs2s,0,0,2,0,7:23,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+6192,0:00:44,15:35,4105,"What is a really inappropriate question you have always wanted to ask? ",66,13,4hguy9,1,1,7,0,7:35,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+219,0:00:36,15:44,6179,"Which famous people would you like to see fight to the death?",321,12,4hgx6w,0,0,9,0,7:44,1,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE
+1893,0:00:35,16:39,8471,"What do you wish there was an unlimited supply of?",99,10,4hh9xl,0,0,7,0,8:39,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+106,0:01:00,16:44,464,"If immortality did become a thing which profession would be the most lucrative?",605,13,4hhb2t,0,0,5,0,8:44,0,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE
+1,0:00:23,16:53,4,"Reddit  how do you start your morning?",6,8,4hhde0,0,0,8,0,8:53,0,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+1,0:00:48,17:04,6325,"What town or city that doesnt get a lot of attention is surprisingly awesome?",205,14,4hhg1v,0,0,5,0,9:04,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1392,0:00:00,17:07,14984,"Whats a song that gives you goosebumps or makes you shiver every time you hear it?",756,16,4hhgrf,1,0,3,1,9:07,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+846,0:01:13,17:32,1381,"What do you have to constantly repeat or explain to people?",831,11,4hhmme,0,0,6,0,9:32,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+8,0:00:52,17:34,343,"What are some etiquette rules people break in public places?",466,10,4hhn4b,0,0,5,0,9:34,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+26,0:03:21,18:07,303,"What is a song almost no one knows about but its awesome?",419,12,4hhvuf,0,0,5,0,10:07,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+9252,0:00:00,18:24,9886,"Which fictional character do you genuinely feel sorry for?",688,9,4hhzic,1,0,2,1,10:24,0,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE
+5,0:00:35,18:33,175,"What two regular tasks would be terrible if multitasked?",286,9,4hi1ex,0,0,6,0,10:33,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+350,0:02:00,18:43,1777,"What are some historical plot twists?",965,6,4hi4bc,1,0,1,0,10:43,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:06:33,19:00,345,"Whats your best wedding horror story?",518,6,4hi90e,1,0,1,0,11:00,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+40693,0:00:12,19:25,8769,"What sequel is better than the original?",1320,7,4hifgq,1,0,10,0,11:25,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+112,0:00:23,19:42,5021,"Reddit how did you lose (or win) the genetic lottery?",39,10,4hiij9,1,0,6,0,11:42,1,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+11692,0:00:34,21:30,8727,"Whats the equivalent of walking to school uphill both ways that we will tell our children?",1434,16,4hj18v,0,0,10,0,13:30,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+69,0:00:43,22:12,10527,"What sentence makes you irrationally angry?",1061,6,4hj8mg,1,0,12,0,14:12,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+4268,0:00:35,22:28,35588,"They say everyones fighting a battle you dont know about. Whats yours?",1128,12,4hjbhg,0,0,7,0,14:28,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+4857,0:00:44,23:02,16054,"What is the best possible combination of two or more foods?",876,11,4hjhka,0,0,8,0,15:02,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+6177,0:00:33,0:08,58248,"What is something useless youve memorized for no reason?",603,9,4hjt7u,1,0,9,0,16:08,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+17,0:01:03,0:28,137,"What was your most awkward drunk experience?",477,7,4hjwoc,0,0,2,0,16:28,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+22,0:00:26,0:39,6459,"What is a food you hated as a kid but love now?",119,12,4hjyle,1,0,9,0,16:39,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+43,0:01:22,1:56,320,"What was your most memorable dream?",944,6,4hkb3z,1,0,4,0,17:56,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:01:39,2:22,791,"Whats the craziest thing you saw in your neighborhood? ",11,10,4hkfi8,1,1,4,0,18:22,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+8397,0:00:27,2:29,910,"If Hitler was in a band what would the band be called?",1246,12,4hkglp,1,0,15,0,18:29,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+418,0:01:41,2:30,10361,"What do you hate(or are just not a fan of) that most people love?",441,14,4hkgsf,0,0,8,0,18:30,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+12,0:00:44,2:39,242,"What social situation happens only in movies?",994,7,4hki2f,1,0,5,0,18:39,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:01:21,3:24,1,"What was your I have no idea what Im doing. moment?",563,11,4hkoz3,1,0,6,0,19:24,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1982,0:07:20,4:03,11104,"Girls what is your he seemed normal on the first date but after that things got weird story? ",292,19,4hkuuw,1,0,1,0,20:03,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1594,0:00:41,4:31,876,"What would make you ever-so-slightly happier right now?",454,8,4hkyzv,1,0,10,0,20:31,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+2910,0:00:23,5:03,1148,"What would be a great name for a gay bar?",1399,10,4hl3wx,1,1,23,0,21:03,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+811,0:01:06,5:45,10,"What was the strangest thing you believed as a child?",552,10,4hla3x,1,0,5,0,21:45,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:00:33,6:36,-33,"What are your thoughts on the USs official mantra being In God We Trust?",2,14,4hlgx2,0,0,10,0,22:36,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+170,0:00:41,6:47,2977,"What is an interesting fact about you?",208,7,4hlieg,0,0,9,0,22:47,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:00:40,9:01,0,"For those with ongoing depression how do you cheer yourself up?",4,11,4hly8f,0,0,6,0,1:01,0,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+3390,0:00:36,9:45,2435,"What show had you hooked right off the pilot episode?",3,10,4hm2np,0,0,11,0,1:45,1,TRUE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+2139,0:01:58,11:01,1857,"What has been borrowed from you and has yet to be returned?",852,12,4hm9rc,0,0,7,0,3:01,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+232,0:04:47,11:26,4304,"What is the most fucked up thing you ever did ?",203,11,4hmbx5,1,1,2,0,3:26,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+13478,0:01:54,11:56,25590,"Who was that kid at your school and what did he do?",429,12,4hmekm,0,0,3,0,3:56,0,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE
+19,0:00:57,12:22,1398,"What movie or TV show had the biggest plot hole?",241,10,4hmgto,0,0,5,0,4:22,1,TRUE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+8269,0:00:25,12:23,27081,"What problem gets worse the more you ignore it?",1076,9,4hmgxj,0,0,11,0,4:23,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:01:50,13:49,5567,"What was the biggest fuck up in history?",230,8,4hmop4,1,0,6,0,5:49,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+5853,0:01:22,14:30,371,"Whats some shitty lifehacks?",666,4,4hmt0u,1,0,4,0,6:30,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:01:18,14:45,3,"How has Reddit benefited your life?",1030,6,4hmukr,0,0,3,0,6:45,0,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+1,0:00:38,14:51,29,"What almost killed you?",6,4,4hmvat,1,0,9,0,6:51,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+26,0:01:38,15:44,18,"In your line of work whats the most annoying cliche you hear on a regular basis?",1136,16,4hn29n,0,0,7,0,7:44,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:03:58,16:13,447,"What was the most embarrassing thing your parents have ever done?",446,11,4hn6bt,1,1,2,0,8:13,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+112,0:00:30,16:17,7,"what is the current biggest threat to mankind?",1333,8,4hn6xg,0,0,10,0,8:17,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+229,0:00:39,16:51,34390,"Youve been given the opportunity to press a button and instantly educate the entire worlds population on the most current understanding of one subject which subject would you choose?",627,29,4hnc4x,1,0,8,0,8:51,1,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE
+5,0:03:05,16:56,2020,"What is the unspoken event in your family? ?",502,9,4hncwt,1,1,2,0,8:56,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+58,0:01:59,16:59,2249,"Young Adults of Reddit: What are you beginning to realize as you get older?",179,14,4hnddb,1,0,10,0,8:59,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:00:22,17:27,122,"What is the quickest way to start an argument?",390,9,4hnhwe,0,0,17,0,9:27,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+3,0:07:05,17:28,-2,"Which celebrities live surprisingly modestly?",37,5,4hni29,0,0,1,0,9:28,0,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE
+1,0:00:24,17:56,1253,"What sounds deep but really isnt?",320,6,4hnmlj,1,0,3,0,9:56,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1193,0:00:30,18:49,1959,"What is the dumbest way youve physically hurt yourself?",1210,9,4hnvxs,1,0,12,0,10:49,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+18,0:00:29,19:17,581,"What skill are you so good at that you can literally do with your eyes closed?",181,16,4ho11r,0,0,9,0,11:17,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+19988,0:00:40,19:44,97201,"Pet owners how did your pets name devolve into its current nickname?",1694,12,4ho82l,1,0,6,0,11:44,1,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+286,0:00:27,20:25,7081,"Whats the worst film youve ever seen?",631,7,4hok1i,0,0,12,0,12:25,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1434,0:01:23,20:30,629,"What annoys you the most in any social media site?",459,10,4holu2,0,0,8,0,12:30,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:00:14,21:01,25,"What would be the best food in a food fight?",20,10,4houna,0,0,10,0,13:01,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+379,1:30:54,21:45,150,"Sewer workers of Reddit what is the strangest thing you have found there? ",373,14,4hp6xu,1,1,0,0,13:45,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+5169,0:04:06,21:57,1207,"College grads of Reddit: What are the most clever or useful things you did when setting up your dorm room?",915,20,4hpaho,0,0,1,0,13:57,0,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE
+12491,0:00:36,22:01,20685,"What advice do people give that sounds totally okay but is actually pretty SHITTY?",237,14,4hpbo9,1,0,4,0,14:01,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:00:31,22:54,106190,"You can choose one video game cheat that you can use at will for the rest of your life. What cheat do you use?",754,24,4hpra4,1,0,10,0,14:54,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+5,0:02:16,23:07,954,"What the weirdest thing you can have in your passenger seat when getting pulled over by the police?",561,18,4hpv56,1,0,4,0,15:07,0,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE
+1,0:00:27,23:53,412,"All doors are now permanently open. What do you do first?",33,11,4hq8l7,1,0,10,0,15:53,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+152,0:00:15,0:27,121,"What is the funniest thing that happened in the Bible?",103,10,4hqi7v,1,0,8,0,16:27,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+6,0:00:12,0:53,795,"Reddit what do you hate most about sex?",1091,8,4hqovg,1,1,9,0,16:53,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:01:41,0:59,330,"When was the most extreme time that your body betrayed you?",232,11,4hqqg7,0,1,5,0,16:59,0,FALSE,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE
+1,0:04:42,1:27,1742,"Which celebrity do you think would be a really lousy lay?",362,11,4hqygh,1,0,1,0,17:27,0,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE
+116,0:00:00,1:28,1733,"What is your personal red flag when meeting new people? Is there anything seemingly silly that is an instant Nope. to you?",734,22,4hqyms,0,0,9,1,17:28,0,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE
+467,0:00:41,2:23,2160,"What movie title becomes the most interesting when you replace one word with Fuck or Fucking?",556,16,4hrdy1,1,0,16,0,18:23,1,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE
+763,0:00:25,2:53,1037,"What are your biggest go to subs when youre bored?",496,10,4hrmal,1,0,7,0,18:53,0,TRUE,FALSE,TRUE,FALSE,FALSE,FALSE,FALSE
+206,0:00:32,2:56,73,"Whats your favorite album since 2000?",871,6,4hrn4a,1,0,6,0,18:56,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+729,0:00:35,3:29,5985,"How would life be different if everyone had a ticker on their forehead that tracks the number of days since they last had sex?",1240,24,4hrvnd,1,1,12,0,19:29,0,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+22580,0:00:19,4:18,18641,"What childhood fantasy jobs are really nightmares?",1295,7,4hs5sv,1,0,4,0,20:18,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+64,0:00:18,5:15,3394,"Whats something that youve pretty much mastered?",391,7,4hseup,0,0,7,0,21:15,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1342,0:00:38,6:38,3650,"What snack do you have so little will power to resist that you often avoid buying it?",394,17,4hsqqd,0,0,10,0,22:38,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+339524,0:00:53,7:04,56335,"Star Wars Megathread: May the fourth be with you!",703,9,4hsu3g,0,0,9,0,23:04,1,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1768,0:01:07,7:10,103,"At what moment did you realise the world is a cruel place?",243,12,4hsut3,0,0,6,0,23:10,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+3089,0:01:01,7:37,25493,"How do know that YOU are smart?",2039,7,4hsy3l,0,0,10,0,23:37,1,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+1,0:00:21,8:25,608,"In your opinion what is morally acceptable to steal?",4,9,4ht3iq,0,0,7,0,0:25,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+15,0:00:30,9:43,834,"What have you stolen?",197,4,4htbnk,0,0,9,0,1:43,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+227,0:01:13,10:34,632,"Reddit what is your go to Karaoke song?",22,8,4htgev,0,0,7,0,2:34,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+16590,0:00:50,10:34,65659,"What do you realise as you age?",1197,7,4htgfl,0,0,8,0,2:34,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+5430,0:01:20,10:56,5370,"Pilots of Reddit whats the strangest thing youve seen from the air?",734,12,4htib6,1,0,2,0,2:56,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+2,0:01:20,12:25,1225,"What fictional character have you hated the most?",121,8,4htpya,0,0,5,0,4:25,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+11,0:00:36,13:39,6565,"What have you actually learned from playing video games?",1211,9,4htwjz,1,0,9,0,5:39,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+4402,0:00:54,13:39,58520,"Which actors name says to you this movie is going to suck! ?",1712,13,4htwlv,1,0,11,0,5:39,1,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE
+1,0:00:31,14:13,1427,"What is a good health practice everyone should get into?",1035,10,4htzwc,1,0,6,0,6:13,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+132,0:27:42,15:15,665,"Lawyers of Reddit what is the most outrageous case someone has asked you to take?",210,15,4hu6w2,1,0,0,0,7:15,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1059,0:00:32,15:36,38175,"What are some old lady names?",200,6,4hu9gi,0,0,17,0,7:36,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1303,0:00:40,16:07,201877,"Besides veganism and CrossFit what do people blab about constantly that drives you batshit crazy?",1820,15,4hudj3,1,0,12,0,8:07,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+7575,0:00:31,16:23,905,"Whats wrong with you?",1259,4,4hufr4,0,0,6,0,8:23,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+24,0:00:50,16:37,92,"Whats the most hilarious misheard lyric?",1493,6,4huhuf,1,0,9,0,8:37,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:00:34,17:24,331,"What do Western people think is most crazy about Chinese culture?",0,11,4huoym,1,0,8,0,9:24,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+13,0:01:37,17:29,388,"If you could have one minor superpower to make everyday life a bit easier what would it be?",344,18,4hupoq,1,0,4,0,9:29,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+572,0:01:08,17:37,27623,"What are some Excel tricks that are useful for work?",244,10,4huqyn,1,0,3,0,9:37,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:16:48,17:39,31,"Delivery men/women of Reddit what is the strangest or creepiest thing youve encountered on the job?",0,16,4hur95,1,0,0,0,9:39,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:00:51,17:59,82,"Add With Lube to a movie title. Whats the new title?",103,11,4huuht,0,0,21,0,9:59,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+5199,0:00:34,18:16,692,"Whats the most frustrating feeling?",493,5,4huxco,1,0,11,0,10:16,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+14,0:00:47,18:22,0,"What is your favorite euphemism for sex?",322,7,4huyh9,1,1,7,0,10:22,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+29182,0:01:47,19:16,7664,"Redditors who had the internet in the 90s what is your favorite memory of using it then?",678,17,4hv7uq,0,0,7,0,11:16,0,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:00:59,19:56,0,"Whats the best feeling you have ever experienced?",20,8,4hvf8r,1,0,3,0,11:56,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+8062,0:00:42,21:19,12744,"How would things be different if Harry Potter was born in the US instead of England?",246,16,4hvuan,1,0,9,0,13:19,1,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+1,0:00:33,21:34,31,"If you could prevent one fictional character from dying who would it be and why?",1070,15,4hvx6t,1,0,5,0,13:34,1,FALSE,TRUE,FALSE,FALSE,TRUE,FALSE,FALSE
+1,0:01:25,22:46,156,"What epic MOVIE scene still gives you the chills?",51,9,4hw9ct,1,0,7,0,14:46,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:00:44,23:07,1205,"What movie is most impossible to be disliked by anyone?",640,10,4hwczp,0,0,7,0,15:07,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:01:44,23:08,1,"What did you learn from your first real relationship?",25,9,4hwd8g,1,0,3,0,15:08,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+319,0:00:41,23:29,2572,"What is your Go-To mixed drink and how you prepare it?",493,11,4hwgni,1,0,8,0,15:29,1,TRUE,FALSE,FALSE,FALSE,FALSE,TRUE,FALSE
+1,0:01:57,23:49,30,"People whove married twice or more what was different the next time round?",36,13,4hwk0k,1,0,4,0,15:49,0,TRUE,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE
+54,0:00:25,0:04,10824,"What mini superpower would you want for your pet?",38,9,4hwmn7,1,0,5,0,16:04,1,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+1,0:00:53,0:07,0,"Whats the most inoffensive thing that you find extremely annoying?",73,10,4hwn5q,0,0,4,0,16:07,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
+667,0:01:05,1:02,735,"Which actor was perfectly cast for the role they were playing?",765,11,4hwvyr,1,0,13,0,17:02,0,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,TRUE
+27,0:00:54,1:06,82,"What do you miss about being a kid?",504,8,4hwwnm,1,0,6,0,17:06,0,TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE
