@@ -107,15 +107,34 @@ def unit_tests():
 	print classify("beautiful","token", hot_token_dict, hot_token_total) == 0.5
 	print classify("teacher","sense", hot_senses_dict) == 2.0
 
-	print hot_senses_dict
-	print hot_token_dict
+	# print hot_senses_dict
+	# print hot_token_dict
 
 	#clear dictionaries
 	hot_senses_dict = {}
 	hot_token_dict = {}
 
+def training():
+	#Manually list out files in DATA folder
+	fileList = ['devDataMay1to4.csv','devDataMay16to18.csv']
+	titles = []
+	# get titles from csv
+	for filename in fileList:
+		print "Reading " + filename + "..."
+		with open('./DATA/' + filename, 'rU') as csvfile:			
+			reader = csv.reader(csvfile)
+			next(reader) # Ignore first row
+
+			for row in reader:
+				titles.append(row[5])
+				print row[5]
+	# print titles
+
+
 if __name__ == "__main__":
 	unit_tests()
+	training()
+	exit()
 	# exit()
 	# a list of the csv file names 
 	fileList = []
@@ -134,6 +153,7 @@ if __name__ == "__main__":
 
 			for row in reader:
 				titles.append(row[5])
+	
 	print "Training dataset..."
 	# train the tokens
 	# for title in titles:
