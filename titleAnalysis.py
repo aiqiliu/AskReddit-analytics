@@ -191,12 +191,42 @@ def build_dictionaries():
 	f.close()
 	print "training set saved into random.p"
 
+def classify_data():
+	#Get cached data
+	cached_hot_senses_dict, cached_hot_token_dict, cached_hot_token_total = pickle.load(open("hot_cache.p", "rb"))
+
+	cached_random_senses_dict, cached_random_token_dict,cached_random_token_total = pickle.load(open("random_cache.p", "rb"))
+
+	#Get data to classify
+	fileList = ['devDataMay1to4','devDataMay16to18']
+	# get titles from csv
+	headers = ['hot_sense_score','hot_token_score','random_sense_score','random_token_score']
+	for filename in fileList:
+		print "Reading " + filename + ".csv and..."
+		print "Writing " + filename + "_nlp.csv..."
+		with open('./DATA/' + filename + '.csv', 'rU') as csvfile_read:	#Read CSV
+			with open('./DATA/' + filename + '_nlp.csv', 'wb') as csvfile_write:
+				reader = csv.reader(csvfile_read)
+				writer = csv.writer(csvfile_write)
+				writer.writerow(next(reader) + headers) # Write header
+				for row in reader:
+					scores = []
+					scores.append(classify(row[5],"sense",cached_hot_senses_dict))
+					scores.append(classify(row[5],"token",cached_hot_token_dict, cached_hot_token_total))
+					scores.append(classify(row[5],"sense",cached_random_senses_dict))
+					scores.append(classify(row[5],"token",cached_random_token_dict, cached_random_token_total))
+					writer.writerow(row + scores)
+					print scores
+
+
 	
+
 
 
 if __name__ == "__main__":
 	unit_tests()
-	build_dictionaries()
+	#build_dictionaries()
+	classify_data()	
 
 	exit()
 	
