@@ -3,8 +3,8 @@ import requests
 import re
 import datetime
 import io_tools
-import nltk
-from pywsd import disambiguate
+# import nltk
+# from pywsd import disambiguate
 
 # from nltk.corpus import wordnet as wn
 
@@ -106,6 +106,8 @@ def extract_post_info(post):
   # Retrieve first comment
   # TODO: maybe raise the threshold to like 5 comments?
   comments_url = r'http://www.reddit.com/r/%s/comments/%s.json?sort=old' % (post["subreddit"], post["id"])
+  print 'post["subreddit"]' + post["subreddit"]
+  print 'post["id"]' + post["id"]
   comments_res = requests.get(comments_url, headers = HEADERS)
   comments_data = comments_res.json()[1]["data"]["children"]
 
@@ -146,7 +148,7 @@ def extract_post_info(post):
     info["question_type"] = question_type_classifier(str(title))
 
 
-    info["senses"] = [word[1] for word in disambiguate(str(title)) if word[1] is not None]
+    # info["senses"] = [word[1] for word in disambiguate(str(title)) if word[1] is not None]
 
     #Parse title in senses = 
     # print disambiguate(str(title))
@@ -213,7 +215,7 @@ def question_type_classifier(title):
 if __name__ == "__main__":
   sub = "AskReddit"
   sort_by = "hot"
-  number_of_posts = 2
+  number_of_posts = 25
 
   data = get_posts(sub, sort=sort_by, n=number_of_posts)
 
