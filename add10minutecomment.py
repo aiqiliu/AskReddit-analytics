@@ -7,7 +7,7 @@ import csv
 HEADERS = { "User-Agent": "EECS 349 scraper" }
 
 
-def timeInfo(postid, row):
+def getTimeInfo(row):
 	info = {}
 	info["post_utcTime"] =  datetime.datetime.strptime(row[11], '%m/%d/%y %H:%M') #convert some data
 	comments_url = r'http://www.reddit.com/r/AskReddit/comments/%s.json?sort=old' % (row[5])
@@ -48,7 +48,55 @@ def timeInfo(postid, row):
 		if i == len(comments_data) - 1:
 			info["10min_comment"] = i
 	return info
-	
+
+def getAuthorData(row):
+	info = {}
+	comments_url = r'http://www.reddit.com/r/AskReddit/comments/%s.json?sort=old' % (row[5])
+	comments_res = requests.get(comments_url, headers = HEADERS)
+	author = comments_res.json()[0]["data"]["children"][0]["data"]["author"]
+
+	author_url = r'http://www.reddit.com/user/%s/about.json' % (author)
+	author_res = requests.get(author_url, headers = HEADERS)
+	try:
+	  author_data = author_res.json()["data"]
+	  info["author_gold"] = 1 if author_data["is_gold"] else 0
+	  
+	except KeyError:
+	  print "WARNING: author account deleted"
+	  info["author_gold"] = None
+
+	return info
+
+def question_type_classifier(title):
+	##################################
+	# QUESTION TYPE
+	# 1 -> Who
+	# 2 -> Where
+	# 3 -> When
+	# 4 -> Why
+	# 5 -> What
+	# 6 -> Which
+	# 7 -> How
+	# 0 -> Could not find
+	##################################
+	question_types = [
+		'', #Blank for could not find
+		'who',
+		'where',
+		'when',
+		'why',
+		'what',
+		'which',
+		'how'
+	]
+	# Convert words in title to lowercase and then split by spaces
+	title_array = title.lower().split()
+
+	for word in title_array:
+		for i in range(1, len(question_types)):
+			if word.find(question_types[i]) >= 0:
+				return i
+	return 0
 
 
 
@@ -60,17 +108,18 @@ def addMissingInfo(fileList):
 	print 'here'
 	for filename in fileList:
 		print "Reading " + filename + ".csv and..."
-		print "Writing " + filename + "_nlp.csv..."
+		print "Writing " + filename + "_fixed.csv..."
 		with open(filename + '.csv', 'rU') as csvfile_read:	#Read CSV
 			with open(filename + '_fixed.csv', 'wb') as csvfile_write:
 				reader = csv.reader(csvfile_read)
 				writer = csv.writer(csvfile_write)
 				writer.writerow(next(reader)) # Write header
 				for row in reader:
-					postid = row[5] #post id
+					
 
 					# Time Info
-					print timeInfo(postid, row)
+					print getTimeInfo(row)
+					print getAuthorData(row)
 
 
 
