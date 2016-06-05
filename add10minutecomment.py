@@ -49,7 +49,7 @@ def getTimeInfo(row):
 			info["10min_comment"] = i
 	return info
 
-def getAuthorData(row):
+def getAuthorInfo(row):
 	info = {}
 	comments_url = r'http://www.reddit.com/r/AskReddit/comments/%s.json?sort=old' % (row[5])
 	comments_res = requests.get(comments_url, headers = HEADERS)
@@ -115,20 +115,20 @@ def addMissingInfo(fileList):
 				writer = csv.writer(csvfile_write)
 				writer.writerow(next(reader)) # Write header
 				for row in reader:
-					
-
+					print row
 					# Time Info
-					print getTimeInfo(row)
-					print getAuthorData(row)
+					timeInfo = getTimeInfo(row)
+					row[9] = timeInfo["10min_comment"]
+					#Author Info
+					authorInfo = getAuthorInfo(row)
+					row[17] = authorInfo["author_gold"]
+					#Question Type
+					row[15] = question_type_classifier(row[4])
 
-
-
-					
-					exit()
+					print row
+					print "=============================="
 					#End of add 10 minute comment
-					
 					writer.writerow(row)
-					print scores
 
 
 if __name__ == "__main__":
