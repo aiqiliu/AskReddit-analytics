@@ -19,6 +19,9 @@ p{
   font-family: 'Roboto', sans-serif;
 
 }
+a {
+  color: rgb(0,64,129);
+}
 .demo-ribbon {
   width: 100%;
   height: 40vh;

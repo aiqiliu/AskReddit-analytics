@@ -102,7 +102,7 @@
 								<span class="mdl-list__item-primary-content">
 									<i class="material-icons mdl-list__item-avatar">person</i>
 									<span>Aiqi Liu</span>
-									<span class="mdl-list__item-sub-title"><a href="mailto:aiqiLiu2018@u.northwestern.edu">aiqiLiu2018@u.northwestern.edu</a></span>
+									<span class="mdl-list__item-sub-title"><a href="mailto:aiqiLiu2018@u.northwestern.edu">aiqiliu2018@u.northwestern.edu</a></span>
 								</span>
 								<span class="mdl-list__item-secondary-content">
 									<a class="mdl-list__item-secondary-action" href="#"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>
@@ -132,12 +132,16 @@
 
 						<h4 id="motivation">Motivation</h4>
 						<p>
-							Question-based discussion is a crucial user engagement mechanism across the Internet. Although question-based discussion has wide-ranging utility, there is little understanding of what makes particular questions more engaging or salient in a social web context.
-							In order to better understand what makes a question popular, we focus on a particular online community called <a href="http://reddit.com/r/AskReddit/">AskReddit</a>. AskReddit is an online forum with over 11.5 million subscribers, where users submit open-ended questions for community discussion. Our main goals are (1) to predict whether a recently-submitted AskReddit question is currently popular or <b>"hot"</b>, and (2) to understand which features and properties influence the popularity of a <b>"hot"</b> submission.
+							Question-based discussion is a crucial user engagement mechanism across the Internet. Although question-based discussion has wide-ranging utility, there is little understanding of what makes particular questions more engaging or salient in a social web context. <br></br>
+							In order to better understand what makes a question popular, we focus on a particular online community called <a href="http://reddit.com/r/AskReddit/">AskReddit</a>. AskReddit is an online forum with over 11.5 million subscribers, where users submit open-ended questions for community discussion. <br></br>
+							Our main goals are: <br>
+							1. Predict whether a recently-submitted AskReddit question was on the top 25 on AskReddit sorted by <b>"hot"</b> <br>
+							2. Understand which features and properties influence the popularity of a <b>"hot"</b> submission
 						</p>
 						<h4 id="solution">Solution</h4>
 						<p>
-							Decision trees appeared to be well-suited for our task because we would like to understand more about the relative information gains provided by various attribute/value splits. We also Naive Bayes and decision tree models. The significant features that we looked at are number of comments on a question within 10 minutes, time of post, probability of word being in dictionaries of either "hot" questions or random question exclusively, and author account information. Other attributes are listed below.
+							Decision trees appeared to be well-suited for our task because we would like to understand more about the relative information gains provided by various attribute/value splits. We also used Naive Bayes and decision tree models. <br></br>
+							The significant features that we looked at are number of comments on a question within 10 minutes, time of post, probability of word being in dictionaries of either "hot" questions or random question exclusively, and author account information. Other attributes are listed below.
 						</p>
 						<p>
 							<b>TABLE OF ATTRIBUTES HERE PLEASE (you don't have to add it, but please delete the sentence above then)</b>
@@ -151,7 +155,9 @@
 						</p>
 						<h4 id="results">Results</h4>
 						<p>
-							Alternating decision trees with 7 boosting iterations (as opposed to 10, the default setting) achieve the best performance of attempted classifiers. 10-fold cross-validation accuracy is 72.9819, an improvement of 21.911 over the ZeroR baseline. The most important features from the tree are NLP-related features, which shows that certain words are common in "hot" questions, day of posting, which shows that weekend posts tend to perform better, time of posting, and early commenting behavior, which showed that questions receiving more engagement within minutes of posting are significantly more likely to achieve longer-term popularity.
+							Alternating decision trees with 7 boosting iterations (as opposed to 10, the default setting) achieve the best performance of attempted classifiers. 10-fold cross-validation accuracy is 72.9819, an improvement of 21.911 over the ZeroR baseline.
+							<br></br>
+							The most important features from the tree are NLP-related features, which shows that certain words are common in "hot" questions, day of posting, which shows that weekend posts tend to perform better, time of posting, and early commenting behavior, which showed that questions receiving more engagement within minutes of posting are significantly more likely to achieve longer-term popularity.
 						</p>
 						
 					</div>
