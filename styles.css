@@ -15,12 +15,18 @@
  */
 p{
   font-size: 1.1em;
-  line-height: 1.8em;
+  line-height: 1.5em;
   font-family: 'Roboto', sans-serif;
 
 }
 a {
   color: rgb(0,64,129);
+}
+
+.download {
+  margin: 0 auto;
+  text-align: center;
+  padding-bottom: 20px;
 }
 .demo-ribbon {
   width: 100%;
