@@ -1,150 +1,164 @@
-<!DOCTYPE html>
+<!doctype html>
+<!--
+  Material Design Lite
+  Copyright 2015 Google Inc. All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+	  https://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License
+-->
 <html lang="en">
-
 <head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+	<title>Material Design Lite</title>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+	<!-- Add to homescreen for Chrome on Android -->
+	<meta name="mobile-web-app-capable" content="yes">
 
-    <title>How to Become a Top25 "Hot" Post on AskReddit</title>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/bootstrap.css" rel="stylesheet">
+	<!-- Add to homescreen for Safari on iOS -->
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="Material Design Lite">
 
-    <!-- Custom CSS -->
-    <link href="css/scrolling-nav.css" rel="stylesheet">
 
+	<!-- Tile icon for Win8 (144x144 + tile color) -->
+	<meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+	<meta name="msapplication-TileColor" content="#3372DF">
+
+
+
+	<!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
+	<!--
+	<link rel="canonical" href="http://www.example.com/">
+-->
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.blue-pink.min.css" />
+<link rel="stylesheet" href="styles.css">
+<!-- Font Awesome -->
+ <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+<link 
 </head>
+<body>
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+		<header class="mdl-layout__header">
+			<div class="mdl-layout__header-row">
+				<!-- Title -->
+				<span class="mdl-layout-title">Predicting the performance of AskReddit questions</span>
+				<!-- Add spacer, to align navigation to the right -->
+				<div class="mdl-layout-spacer"></div>
+				<!-- Navigation. We hide it in small screens. -->
+				<nav class="mdl-navigation mdl-layout--large-screen-only">
+					<a class="mdl-navigation__link" href="#motivation">Motivation</a>
+					<a class="mdl-navigation__link" href="#solution">Solution</a>
+					<a class="mdl-navigation__link" href="#training">Training and Testing</a>
+					<a class="mdl-navigation__link" href="#results">Results</a>
+				</nav>
+			</div>
+		</header>
+		<div class="mdl-layout__drawer">
+			<span class="mdl-layout-title">Predicting the performance of AskReddit questions</span>
+			<nav class="mdl-navigation">
+				<a class="mdl-navigation__link" href="">Link</a>
+				<a class="mdl-navigation__link" href="">Link</a>
+				<a class="mdl-navigation__link" href="">Link</a>
+				<a class="mdl-navigation__link" href="">Link</a>
+			</nav>
+		</div>
+		<main class="mdl-layout__content">
+			<div class="page-content">
+				<div class="demo-container mdl-grid">
+					<div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
+					<div class="demo-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
+						<h3>Predicting the performance of AskReddit questions</h3>
+						<p>
+							EECS 349: Machine Learning | Northwestern University
+						</p>
+						<ul class="demo-list-two mdl-list">
+							<li class="mdl-list__item mdl-list__item--two-line">
+								<span class="mdl-list__item-primary-content">
+									<i class="material-icons mdl-list__item-avatar">person</i>
+									<span>Sarah Lim</span>
+									<span class="mdl-list__item-sub-title"><a href="mailto:arah@sarahlim.com">sarah@sarahlim.com</a></span>
+								</span>
+								<span class="mdl-list__item-secondary-content">
+									<a class="mdl-list__item-secondary-action" href="#"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>
+								</span>
+							</li>
+							<li class="mdl-list__item mdl-list__item--two-line">
+								<span class="mdl-list__item-primary-content">
+									<i class="material-icons mdl-list__item-avatar">person</i>
+									<span>Aiqi Liu</span>
+									<span class="mdl-list__item-sub-title"><a href="mailto:aiqiLiu2018@u.northwestern.edu">aiqiLiu2018@u.northwestern.edu</a></span>
+								</span>
+								<span class="mdl-list__item-secondary-content">
+									<a class="mdl-list__item-secondary-action" href="#"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>
+								</span>
+							</li>
+							<li class="mdl-list__item mdl-list__item--two-line">
+								<span class="mdl-list__item-primary-content">
+									<i class="material-icons mdl-list__item-avatar">person</i>
+									<span>Sameer Srivastava</span>
+									<span class="mdl-list__item-sub-title"><a href="mailto:sameersrivastava2017@u.northwestern.edu">sameersrivastava2017@u.northwestern.edu</a></span>
+								</span>
+								<span class="mdl-list__item-secondary-content">
+									<a class="mdl-list__item-secondary-action" href="#"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>
+								</span>
+							</li>
+							<li class="mdl-list__item mdl-list__item--two-line">
+								<span class="mdl-list__item-primary-content">
+									<i class="material-icons mdl-list__item-avatar">person</i>
+									<span>Jennie Werner</span>
+									<span class="mdl-list__item-sub-title"><a href="mailto:jenniewerner2018@u.northwestern.edu">jenniewerner2018@u.northwestern.edu</a></span>
+								</span>
+								<span class="mdl-list__item-secondary-content">
+									<a class="mdl-list__item-secondary-action" href="#"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>
+								</span>
+							</li>
+						</ul>
 
-<!-- The #page-top ID is part of the scrolling feature - the data-spy and data-target are part of the built-in Bootstrap scrollspy function -->
-
-<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <div class="container">
-            <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand page-scroll" href="#page-top">Home</a>
-            </div>
-
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav">
-                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
-                    <li class="hidden">
-                        <a class="page-scroll" href="#page-top"></a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#motivation">Motivation</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#solution">Solution</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#training_testing">Training & Testing</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#results">Results</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container -->
-    </nav>
-
-    <!-- Intro Section -->
-    <section id="intro" class="intro-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1>What Makes a AskReddit post on "Hot" Top 25</h1> 
-                    <br></br>
-                    
-                    <h3>EECS 349: Machine Learning | Northwestern University</h3>
-                    <br></br>
-
-                    <h3>
-                        <a href="http://github.com/sarahlim" target="_blank">Sarah Lim</a> &nbsp &nbsp
-                        <a href="http://github.com/aiqiliu" target="_blank">Aiqi Liu</a>  &nbsp &nbsp  
-                        <a href="http://github.com/sameersrivastava" target="_blank">Sameer Srivastava</a> &nbsp &nbsp
-                        <a href="http://github.com/jenniewerner" target="_blank">Jennie Werner</a>
-                    </h3>
-                    <br></br>
-                    
-                    <br></br>
-                    <button type="button" class="btn btn-primary-outline btn-lg">Download Report
-                    <i class="fa fa-cloud-download" aria-hidden="true"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Motivation Section -->
-    <section id="motivation" class="motivation-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1>Motivation</h1>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Solution Section -->
-    <section id="solution" class="solution-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1>Solution</h1>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Training Section -->
-    <section id="training_testing" class="training_testing-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1>Training and Testing</h1>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-   <!-- Result -->
-    <section id="results" class="result-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1>Result</h1>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
-    <!-- Scrolling Nav JavaScript -->
-    <script src="js/jquery.easing.min.js"></script>
-    <script src="js/scrolling-nav.js"></script>
-
+						<h4 id="motivation">Motivation</h4>
+						<p>
+							Question-based discussion is a crucial user engagement mechanism across the Internet. Although question-based discussion has wide-ranging utility, there is little understanding of what makes particular questions more engaging or salient in a social web context.
+							In order to better understand what makes a question popular, we focus on a particular online community called AskReddit (<a href="http://reddit.com/r/AskReddit/">http://reddit.com/r/AskReddit/</a>). AskReddit is an online forum with over 11.5 million subscribers, where users submit open-ended questions for community discussion. Our main goals are (1) to predict whether a recently-submitted AskReddit question is currently popular or <b>"hot"</b>, and (2) to understand which features and properties influence the popularity of a <b>"hot"</b> submission.
+						</p>
+						<h4 id="solution">Solution</h4>
+						<p>
+							Decision trees are especially well-suited for our task, because they are supervised concept-learners, and we would like to understand more about the relative information gains provided by various attribute/value splits. The attributes that we 
+						</p>
+						<p>
+							
+						</p>
+						<h4 id="training">Training and Testing</h4>
+						<p>
+							
+						</p>
+						<p>
+							
+						</p>
+						<h4 id="results">Results</h4>
+						<p>
+							Cillum dolor esse sit incididunt velit eiusmod magna ad nostrud officia aute dolor dolor. Magna esse ullamco pariatur adipisicing consectetur eu commodo officia. Ex cillum consequat mollit minim elit est deserunt occaecat nisi amet. Quis aliqua nostrud Lorem occaecat sunt. Eiusmod quis amet ullamco aliquip dolore ut incididunt duis adipisicing. Elit consequat nisi eiusmod aute ipsum sunt veniam do est. Occaecat mollit aliquip ut proident consectetur amet ex dolore consectetur aliqua elit.
+						</p>
+						
+					</div>
+				</div>
+			</div>
+		</main>
+	</div>
+	<script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 </body>
-
 </html>
