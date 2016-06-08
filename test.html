@@ -21,7 +21,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-	<title>Predicting the performance of AskReddit questions</title>
+	<title>Material Design Lite</title>
 
 	<!-- Add to homescreen for Chrome on Android -->
 	<meta name="mobile-web-app-capable" content="yes">
@@ -133,25 +133,25 @@
 						<h4 id="motivation">Motivation</h4>
 						<p>
 							Question-based discussion is a crucial user engagement mechanism across the Internet. Although question-based discussion has wide-ranging utility, there is little understanding of what makes particular questions more engaging or salient in a social web context.
-							In order to better understand what makes a question popular, we focus on a particular online community called <a href="http://reddit.com/r/AskReddit/">AskReddit</a>. AskReddit is an online forum with over 11.5 million subscribers, where users submit open-ended questions for community discussion. Our main goals are (1) to predict whether a recently-submitted AskReddit question is currently popular or <b>"hot"</b>, and (2) to understand which features and properties influence the popularity of a <b>"hot"</b> submission.
+							In order to better understand what makes a question popular, we focus on a particular online community called AskReddit (<a href="http://reddit.com/r/AskReddit/">http://reddit.com/r/AskReddit/</a>). AskReddit is an online forum with over 11.5 million subscribers, where users submit open-ended questions for community discussion. Our main goals are (1) to predict whether a recently-submitted AskReddit question is currently popular or <b>"hot"</b>, and (2) to understand which features and properties influence the popularity of a <b>"hot"</b> submission.
 						</p>
 						<h4 id="solution">Solution</h4>
 						<p>
-							Decision trees appeared to be well-suited for our task because we would like to understand more about the relative information gains provided by various attribute/value splits. We also Naive Bayes and decision tree models. The significant features that we looked at are number of comments on a question within 10 minutes, time of post, probability of word being in dictionaries of either "hot" questions or random question exclusively, and author account information. Other attributes are listed below.
+							Decision trees are especially well-suited for our task, because they are supervised concept-learners, and we would like to understand more about the relative information gains provided by various attribute/value splits. The significant features that we used are comments in 10 minutes of submitting a question, day of the week, probability of words being "hot" based off dictionaries generated using natural language processing, and author information. 
 						</p>
 						<p>
-							<b>TABLE OF ATTRIBUTES HERE PLEASE (you don't have to add it, but please delete the sentence above then)</b>
+							
 						</p>
 						<h4 id="training">Training and Testing</h4>
 						<p>
-							Our dataset consists of 674 examples &horbar; an equal number of top questions and random question for each day of the week. We use the <a href="https://www.reddit.com/dev/api">Reddit API</a> to retrieve the top 25 questions at time t of query (our positive examples), along with 25 other randomly-selected questions posted within the past 24 hours (our negative examples) of t.
+							
 						</p>
 						<p>
-							We use Weka to train and evaluate a number of binary classification models on the remaining 90% of our dataset. All models use 10-fold cross-validation. Our ZeroR baseline achieves 51.0708 accuracy, as we take care to balance the frequency of positive and negative instances throughout our dataset. 
+							
 						</p>
 						<h4 id="results">Results</h4>
 						<p>
-							Alternating decision trees with 7 boosting iterations (as opposed to 10, the default setting) achieve the best performance of attempted classifiers. 10-fold cross-validation accuracy is 72.9819, an improvement of 21.911 over the ZeroR baseline. The most important features from the tree are NLP-related features, which shows that certain words are common in "hot" questions, day of posting, which shows that weekend posts tend to perform better, time of posting, and early commenting behavior, which showed that questions receiving more engagement within minutes of posting are significantly more likely to achieve longer-term popularity.
+							Cillum dolor esse sit incididunt velit eiusmod magna ad nostrud officia aute dolor dolor. Magna esse ullamco pariatur adipisicing consectetur eu commodo officia. Ex cillum consequat mollit minim elit est deserunt occaecat nisi amet. Quis aliqua nostrud Lorem occaecat sunt. Eiusmod quis amet ullamco aliquip dolore ut incididunt duis adipisicing. Elit consequat nisi eiusmod aute ipsum sunt veniam do est. Occaecat mollit aliquip ut proident consectetur amet ex dolore consectetur aliqua elit.
 						</p>
 						
 					</div>
