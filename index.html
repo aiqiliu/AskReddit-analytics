@@ -137,24 +137,31 @@
 		                    </button>
 	                	</div>
 
-	                	<br></br>
-						<h4 id="motivation">Motivation</h4>
+	                	
+						<h3 id="motivation">Motivation</h3>
 						<p>
-							Question-based discussion is a crucial user engagement mechanism across the Internet. Although question-based discussion has wide-ranging utility, there is little understanding of what makes particular questions more engaging or salient in a social web context. <br></br>
-							In order to better understand what makes a question popular, we focus on a particular online community called <a href="http://reddit.com/r/AskReddit/">AskReddit</a>. AskReddit is an online forum with over 11.5 million subscribers, where users submit open-ended questions for community discussion. <br></br>
+							Question-based discussion is a crucial user engagement mechanism across the Internet. Although question-based discussion has wide-ranging utility, there is little understanding of what makes particular questions more engaging or salient in a social web context. 
+						<p>
+							In order to better understand what makes a question popular, we focus on a particular online community called <a href="http://reddit.com/r/AskReddit/">AskReddit</a>. AskReddit is an online forum with over 11.5 million subscribers, where users submit open-ended questions for community discussion. 
+						</p>
+						<p>
 							Our main goals are: <br>
-							1. Predict whether a recently-submitted AskReddit question was on the top 25 on AskReddit sorted by <b>"hot"</b> <br>
-							2. Understand which features and properties are more successful in determining a <b>"hot"</b>  top 25 post
+							<ul>
+								<li> Predict whether a recently-submitted AskReddit question was a <b>"hot"</b> top 25 post</li> 
+								<li> Understand which features and properties are more successful in determining a <b>"hot"</b> top 25 post</li>
+							</ul>
 						</p>
 
-						<br></br>
-						<h4 id="solution">Solution</h4>
+						
+						<h3 id="solution">Solution</h3>
 						<p>
-							We found decisions trees to be especially well suited for our tasks because we would like to understand more about the relative information gains provided by various attribute/value splits. We also used Naive Bayes and decision tree models. <br></br>
-							
-							Our features include the metadata features from the Reddit API and language features such as token_score and sense score because we assumed that certain wording and topic of the question title may effect the post’s popularity. <br></br>
-
-							Below is the table of our metadata attributes and read more on our report about our language features. <br></br>
+							We found decisions trees to be especially well suited for our tasks because we would like to understand more about the relative information gains provided by various attribute/value splits. We also used Naive Bayes and decision tree models. 
+						</p>
+						<p>
+							Our features include the metadata features from the Reddit API and language features such as token_score and sense score because we assumed that certain wording and topic of the question title may effect the post’s popularity. 
+						</p>
+						<p>
+							Below is the table of our metadata attributes and read more on our report about our language features. 
 						</p>
 					
 						<table style="width:100%;">
@@ -244,20 +251,43 @@
 							</tbody>
 							</table>
 
-						<br></br>
-						<h4 id="training">Training and Testing</h4>
+						
+						<h3 id="training">Training and Testing</h3>
 						<p>
 							Our dataset consists of 674 examples &horbar; an equal number of top questions and random question for each day of the week. We use the <a href="https://www.reddit.com/dev/api">Reddit API</a> to retrieve the top 25 questions at time t of query (our positive examples), along with 25 other randomly-selected questions posted within the past 24 hours (our negative examples) of t.
 						</p>
 						<p>
-							We use Weka to train and evaluate a number of binary classification models on the remaining 90% of our dataset. All models use 10-fold cross-validation. Our ZeroR baseline achieves 51.0708 accuracy, as we take care to balance the frequency of positive and negative instances throughout our dataset. 
+							We use Weka to train and evaluate a number of models using the remaining 90% of our original dataset. All models use 10-fold cross-validation. Our ZeroR baseline achieves 51.0708 accuracy, as we take care to balance the frequency of positive and negative instances throughout our dataset. The following section describes our selected classifiers.
 						</p>
+						<p><strong> One-level decision trees </strong> <br>
+						We use one-level decision tree algorithms to understand which features provide the most information gain with respect to question performance.</p>
+						<ul>
+							<li>OneR produces a multi-way split on a single attribute</li>
+							<li>DecisionStump, conversely, splits on a single attribute/value combination</li>
+						</ul>
+						<p><strong>Full decision trees </strong><br>
+						Decision trees are especially well-suited for our task, because they are supervised concept-learners, and we would like to understand more about the relative information gains provided by various attribute/value splits. With the possible exception of hybrid Naive Bayes/Decision Trees, decision tree models also encode conditional dependencies between features very well.</p>
+						<ul>
+							<li>J48Tree, Weka's implementation of Quinlan's C4.5 algorithm, chooses splits that maximize information gain measured in terms of Shannon entropy</li>
+							<li>NBTree is a Naive Bayes and Decision Tree hybrid learning model. We would like to understand how this affects attribute selection, since a number of our features (e.g. all the temporal ones) seem intuitively dependent</li>
+							<li>REPTree is similar to other decision tree learners, except that in the case of numeric values, the algorithm tries to minimize the total variance</li>
+							<li>ADTree implements the alternating decision tree algorithm, which incorporates boosting into decision tree generation by treating each predicate node as a "weak hypothesis" and generating a real-valued prediction for that node. At test time, an instance traverses the tree based on the conditions it matches, and the cumulative sum over the corresponding predictions designates its final classification</li>
+						</ul>
+						<p> <strong> Other</strong></p>
+							<ul>
+								<li>NaiveBayesSimple, a Naive Bayes classifier, applies Bayes' theorem and makes strong conditional independence assumptions between features. Again, we would like to understand to what extent our feature space is linearly independent</li>
+								<li>Logistic implements a multinomial logistic regression model, which we will use to interpret the extent to which our numerical features and output classification are monotonically-related</li>
+							</ul>
 
-						<br></br>
-						<h4 id="results">Results</h4>
+
+
+						
+						<h3 id="results">Results</h3>
+						<img src="img/wordCloud.png" style="width: 50%;"></img>
 						<p>
 							Alternating decision trees with 7 boosting iterations (as opposed to 10, the default setting) achieve the best performance of attempted classifiers. 10-fold cross-validation accuracy is 72.9819, an improvement of 21.911 over the ZeroR baseline.
-							<br></br>
+						</p>
+						<p>
 							The most important features from the tree are NLP-related features, which shows that certain words are common in "hot" questions, day of posting, which shows that weekend posts tend to perform better, time of posting, and early commenting behavior, which showed that questions receiving more engagement within minutes of posting are significantly more likely to achieve longer-term popularity.
 						</p>
 						
